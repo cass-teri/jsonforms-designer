@@ -1,0 +1,119 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        --background: rgb(255, 255, 255);
+        --foreground: rgb(2, 8, 3);
+
+        --card: rgb(255, 255, 255);
+        --card-foreground: rgb(2, 8, 3);
+
+        --popover: rgb(255, 255, 255);
+        --popover-foreground: rgb(2, 8, 3);
+
+        --primary: rgb(15, 23, 42);
+        --primary-foreground: rgb(248, 250, 252);
+
+        --secondary: rgb(241, 245, 249);
+        --secondary-foreground: rgb(15, 23, 42);
+
+        --muted: rgb(241, 245, 249);
+        --muted-foreground: rgb(100, 116, 139);
+
+        --accent: rgb(241, 245, 249);
+        --accent-foreground: rgb(15, 23, 42);
+
+        --destructive: rgb(239, 68, 68);
+        --destructive-foreground: rgb(248, 250, 252);
+
+        --border: rgb(226, 232, 240);
+        --input: rgb(226, 232, 240);
+        --ring: rgb(2, 8, 23);
+
+        --radius: 0.5rem;
+    }
+
+    .other {
+        --background: rgb(40, 40, 40);
+        --foreground: rgb(235, 219, 178);
+        --selectionMatch: rgba(185, 157, 85, 0.36);
+        --lineHighlight: rgba(186, 161, 96, 0.17);
+        --gutterForeground: rgb(124, 111, 100, 0.36)
+    }
+
+    .dark {
+        --background: rgb(40, 40, 40);
+        --foreground: rgb(235, 219, 178);
+
+        --card: rgba(124, 111, 100, 0.36);
+        --card-foreground: rgb(235, 219, 178);
+
+        --popover: rgb(40, 40, 40);
+        --popover-foreground: rgb(235, 219, 178);
+
+        --primary: rgb(186, 161, 96);
+        --primary-foreground: rgb(40, 40, 40);
+
+        --secondary: rgb(60, 60, 60);
+        --secondary-foreground: rgb(235, 219, 178);
+
+        --muted: rgb(80, 80, 80);
+        --muted-foreground: rgb(20, 20, 20);
+
+        --accent: rgb(20, 20, 20);
+        --accent-foreground: rgb(186, 161, 96);
+
+        --destructive: rgb(127, 29, 29);
+        --destructive-foreground: rgb(248, 250, 252);
+
+        --border: rgb(124, 111, 100, 0.36);
+        --input: rgb(80, 80, 80);
+        --ring: rgb(186, 161, 96);
+    }
+}
+
+
+@layer base {
+    * {
+        @apply border-border;
+    }
+
+    body {
+        @apply bg-background text-foreground;
+    }
+
+    h1 {
+        @apply text-5xl text-gray-500
+        /* Set Font */
+    }
+
+    h2 {
+        @apply text-4xl text-gray-500
+    }
+
+    h3 {
+        @apply text-3xl text-gray-500
+    }
+
+    h4 {
+        @apply text-2xl text-gray-500
+    }
+
+    h5 {
+        @apply text-xl text-gray-500
+    }
+
+    main {
+
+    }
+
+    .picture {
+        border-radius: 2rem 16rem;
+        width: 40%;
+        height: 40%;
+        object-fit: cover;
+    }
+
+}

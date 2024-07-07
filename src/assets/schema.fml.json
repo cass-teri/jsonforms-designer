@@ -1,0 +1,222 @@
+{
+    "form":{
+        "properties":{},
+        "children":[
+            {
+                "section": {
+                    "properties": { "title": "Sellers Information", "schema" :"sellers_information" },
+                    "children": [
+                        {
+                            "text": {
+                                "properties": {
+                                    "schema": "name",
+                                    "title": "Name (Last, First, Middle)",
+                                    "width": 8
+                                }
+                            }
+                        },
+                        {
+                            "phone": {
+                                "properties": {
+                                    "schema": "phone",
+                                    "title": "Phone",
+                                    "width": 4
+                                }
+                            }
+                        },
+                        {
+                            "text": {
+                                "properties": {
+                                    "schema": "address",
+                                    "title": "Address",
+                                    "width": 8
+                                }
+                            }
+                        },
+                        {
+                            "text": {
+                                "properties": {
+                                    "schema": "city",
+                                    "title": "City",
+                                    "width": 4
+                                }
+                            }
+                        },
+                        {
+                            "dropdown": {
+                                "properties": {
+                                    "schema": "province_state",
+                                    "title": "Province/State",
+                                    "width": 4
+                                }
+                            }
+                        },
+                        {
+                            "text": {
+                                "properties": {
+                                    "schema": "postal_code",
+                                    "title": "Postal Code/Zip",
+                                    "width": 4
+                                }
+                            }
+                        },
+                        {
+                            "text": {
+                                "properties": {
+                                    "schema": "identification",
+                                    "title": "Personal Identification",
+                                    "width": 12
+                                }
+                            }
+                        }
+
+                    ]
+                }
+            },
+            {
+                "section":{
+                    "properties": {"title": "Vehicle Information", "schema": "vehicle_information"},
+                    "children":[
+                        {
+                            "text": {
+                                "properties": {
+                                    "schema": "year",
+                                    "title": "Year",
+                                    "width": 3
+                                }
+                            }
+                        },
+                        {
+                            "text": {
+                                "properties": {
+                                    "schema": "make",
+                                    "title": "Make",
+                                    "width": 3
+                                }
+                            }
+                        },
+                        {
+                            "text": {
+                                "properties": {
+                                    "schema": "model",
+                                    "title": "Model or Series",
+                                    "width": 6
+                                }
+                            }
+                        },
+                        {
+                            "text": {
+                                "properties": {
+                                    "schema": "vin",
+                                    "title": "VIN (Vehicle Identification Number)",
+                                    "width": 6
+                                }
+                            }
+                        },
+                        {
+                            "text": {
+                                "properties": {
+                                    "schema": "color",
+                                    "title": "Body Color",
+                                    "width": 3
+                                }
+                            }
+                        },
+                        {
+                            "text": {
+                                "properties": {
+                                    "schema": "odometer",
+                                    "title": "Odometer",
+                                    "width": 3
+                                }
+                            }
+                        }
+                    ]
+
+                }
+            },
+            {
+                "section": {
+                    "properties": { "title": "Buyers Information", "schema" :"buyers_information" },
+                    "children": [
+                        {
+                            "text": {
+                                "properties": {
+                                    "schema": "name",
+                                    "title": "Name (Last, First, Middle)",
+                                    "width": 8
+                                }
+                            }
+                        },
+                        {
+                            "phone":
+                            {
+                                "properties": {
+                                    "schema": "phone",
+                                    "title": "Phone",
+                                    "width": 4
+                                }
+                            }
+                        },
+                        {
+                            "text": {
+                                "properties": {
+                                    "schema": "address",
+                                    "title": "Address",
+                                    "width": 8
+                                }
+                            }
+                        },
+                        {
+                            "text": {
+                                "properties": {
+                                    "schema": "city",
+                                    "title": "City",
+                                    "width": 4
+                                }
+                            }
+                        },
+                        {
+                            "text": {
+                                "properties": {
+                                    "schema": "province_state",
+                                    "title": "Province/State",
+                                    "width": 4
+                                }
+                            }
+                        },
+                        {
+                            "text": {
+                                "properties": {
+                                    "schema": "postal_code",
+                                    "title": "Postal Code/Zip",
+                                    "width": 4
+                                }
+                            }
+                        },
+                        {
+                            "text": {
+                                "properties": {
+                                    "schema": "identification",
+                                    "title": "Personal Identification",
+                                    "width": 12
+                                }
+                            }
+
+                        },
+                        {
+                            "text":{
+                                "properties":{
+                                    "schema": "sold_for",
+                                    "title": "This vehicle is sold for the sum of",
+                                    "subtext": "Written in full",
+                                    "width" :8
+                                }
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}
