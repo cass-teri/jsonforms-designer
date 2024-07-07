@@ -2,13 +2,16 @@ import { ThemeToggle } from "@/components/framework/skeleton/header/ThemeToggle"
 import { MainMenu } from "@/components/framework/skeleton/header/MainMenu.tsx"
 import { ToggleButton } from "@/components/framework/ToggleButton.tsx"
 import { BiSolidPaintRoll } from "react-icons/bi"
-import { VscJson, VscOpenPreview } from "react-icons/vsc"
+import { VscOpenPreview, VscSaveAll } from "react-icons/vsc"
 import { VimToggle } from "@/components/framework/skeleton/header/VimToggle.tsx"
-import { FaDownload, FaSave } from "react-icons/fa"
+import { FaDownload } from "react-icons/fa"
+import { FaDownload as Fa6Download } from "react-icons/fa6"
 import { useSchema } from "@/components/contexts/SchemaContextProvider.tsx"
-import { CiFileOn } from "react-icons/ci"
-import { AiFillFolderOpen } from "react-icons/ai"
 import { OpenFile } from "@/lib/OpenFile.ts"
+import { MdOutlineFolderZip, MdOutlineSnippetFolder } from "react-icons/md"
+import { AiOutlineFileZip } from "react-icons/ai"
+import { LuFileJson } from "react-icons/lu"
+import { RiSave2Line, RiSave3Line } from "react-icons/ri"
 
 interface IHeaderProps {
     toggleView: (view: string) => void
@@ -108,7 +111,7 @@ export function Header(props: IHeaderProps) {
                         className="hover:bg-primary hover:text-primary-foreground w-10 h-10 flex flex-col justify-center items-center rounded"
                         title="New Data File"
                     >
-                        <CiFileOn className="w-8 h-8" />
+                        <AiOutlineFileZip className="w-8 h-8" />
                     </button>
 
                     <button
@@ -116,7 +119,7 @@ export function Header(props: IHeaderProps) {
                         className="hover:bg-primary hover:text-primary-foreground w-10 h-10 flex flex-col justify-center items-center rounded"
                         title="New UI File"
                     >
-                        <CiFileOn className="w-8 h-8" />
+                        <LuFileJson className="w-8 h-8" />
                     </button>
 
                     <button
@@ -124,14 +127,14 @@ export function Header(props: IHeaderProps) {
                         className="hover:bg-primary hover:text-primary-foreground w-10 h-10 flex flex-col justify-center items-center rounded"
                         title="Open Data File"
                     >
-                        <AiFillFolderOpen className="w-8 h-8" />
+                        <MdOutlineFolderZip className="w-8 h-8" />
                     </button>
                     <button
                         onClick={OpenUiFile}
                         className="hover:bg-primary hover:text-primary-foreground w-10 h-10 flex flex-col justify-center items-center rounded"
                         title="Open UI File"
                     >
-                        <AiFillFolderOpen className="w-8 h-8" />
+                        <MdOutlineSnippetFolder className="w-8 h-8" />
                     </button>
 
                     <button
@@ -139,7 +142,7 @@ export function Header(props: IHeaderProps) {
                         className="hover:bg-primary hover:text-primary-foreground w-10 h-10 flex flex-col justify-center items-center rounded"
                         title="Save Data File"
                     >
-                        <FaSave className="w-8 h-8" />
+                        <RiSave2Line className="w-8 h-8" />
                     </button>
 
                     <button
@@ -147,7 +150,7 @@ export function Header(props: IHeaderProps) {
                         className="hover:bg-primary hover:text-primary-foreground w-10 h-10 flex flex-col justify-center items-center rounded"
                         title="Save UI File"
                     >
-                        <FaSave className="w-8 h-8" />
+                        <RiSave3Line className="w-8 h-8" />
                     </button>
 
                     <button
@@ -155,7 +158,7 @@ export function Header(props: IHeaderProps) {
                         className="hover:bg-primary hover:text-primary-foreground w-10 h-10 flex flex-col justify-center items-center rounded"
                         title="Save All Files"
                     >
-                        <FaSave className="w-8 h-8" />
+                        <VscSaveAll className="w-8 h-8" />
                     </button>
 
                     <button
@@ -169,7 +172,7 @@ export function Header(props: IHeaderProps) {
                         onClick={DownloadUiSchema}
                         className="hover:bg-primary hover:text-primary-foreground w-10 h-10 flex flex-col justify-center items-center rounded"
                     >
-                        <FaDownload className="w-8 h-8" />
+                        <Fa6Download className="w-8 h-8" />
                     </button>
                 </div>
             </div>
@@ -187,7 +190,7 @@ export function Header(props: IHeaderProps) {
 
                     <ToggleButton
                         is_active={props.show_data_schema}
-                        icon={<VscJson />}
+                        icon={<AiOutlineFileZip />}
                         view="data_schema"
                         toggleView={props.toggleView}
                     >
@@ -195,7 +198,7 @@ export function Header(props: IHeaderProps) {
                     </ToggleButton>
                     <ToggleButton
                         is_active={props.show_ui_schema}
-                        icon={<VscJson />}
+                        icon={<LuFileJson />}
                         view="ui_schema"
                         toggleView={props.toggleView}
                     >
