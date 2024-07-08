@@ -22,7 +22,7 @@ export function PreviewPanel() {
 
     return (
         <div className="bg-background text-foreground h-svh">
-            <div className="bg-background text-foreground scroll-auto h-[calc(100vh-6em)] overflow-auto px-14 py-6 ">
+            <div className="bg-background text-foreground scroll-auto h-[calc(100vh-6em)] overflow-auto pl-8 pr-20 py-6">
                 <JsonForms
                     schema={JSON.parse(data_schema)}
                     uischema={JSON.parse(ui_schema)}

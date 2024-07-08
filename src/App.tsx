@@ -42,15 +42,15 @@ function App() {
                     <Panel defaultSize={25} hidden={!show_canvas}>
                         <FormCanvas></FormCanvas>
                     </Panel>
-                    <PanelResizeHandle className="border-2 border-border" />
+                    <PanelResizeHandle className={`border-2 border-border ${ show_canvas ? "" : "hidden"}`} />
                     <Panel defaultSize={25} hidden={!show_data_schema}>
                         <DataSchemaEditor></DataSchemaEditor>
                     </Panel>
-                    <PanelResizeHandle className="border-2 border-border" />
+                    <PanelResizeHandle className={`border-2 border-border ${ show_data_schema?"":"hidden"}`} />
                     <Panel defaultSize={25} hidden={!show_ui_schema}>
                         <UiSchemaEditor></UiSchemaEditor>
                     </Panel>
-                    <PanelResizeHandle className="border-2 border-border" />
+                    <PanelResizeHandle className={`border-2 border-border ${ show_ui_schema?"":"hidden"}`} />
                     <Panel defaultSize={25} hidden={!show_preview}>
                         <PreviewPanel></PreviewPanel>
                     </Panel>
