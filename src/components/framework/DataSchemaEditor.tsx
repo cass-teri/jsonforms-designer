@@ -41,6 +41,10 @@ export function DataSchemaEditor() {
                     extensions={[json(), vim()]}
                     onChange={onChange}
                     onDrop={OnDrop}
+                    basicSetup={{
+                        autocompletion: true,
+                        history: true
+                    }}
                 />
             ) : (
                 <CodeMirror

@@ -8,10 +8,11 @@ import {
 } from "@/components/ui/menubar.tsx"
 import { useRef } from "react"
 import { useSchema } from "@/components/contexts/SchemaContextProvider.tsx"
+import { OpenFile } from "@/lib/OpenFile.ts"
 
 export function MainMenu() {
     const ref = useRef<HTMLInputElement>(null)
-    const { ui_schema, SetUiSchema, ui_buffer, SetIsDirty, SetUiBuffer } = useSchema()
+    const { SetUiSchema, ui_buffer, data_buffer, SetIsDirty, SetUiBuffer, SetDataBuffer, SetDataSchema } = useSchema()
 
     function FileChange() {
         if (ref.current !== null) {
@@ -43,7 +44,27 @@ export function MainMenu() {
         }
     }
 
-    function SaveFile() {
+    function SaveAllFiles() {
+        try {
+            SaveDataFile()
+            SaveUiFile()
+        } catch (e) {
+            console.error(e)
+        }
+    }
+
+    function SaveDataFile() {
+        try {
+            const buffer_parsed = JSON.parse(data_buffer)
+            const schema_string = JSON.stringify(buffer_parsed, null, 4)
+            SetDataSchema(schema_string)
+            SetIsDirty(false)
+        } catch (e) {
+            console.error(e)
+        }
+    }
+
+    function SaveUiFile() {
         try {
             const buffer_parsed = JSON.parse(ui_buffer)
             const schema_string = JSON.stringify(buffer_parsed, null, 4)
@@ -54,20 +75,65 @@ export function MainMenu() {
         }
     }
 
-    function DownloadFile() {
+    function DownloadUiSchema() {
         const element = document.createElement("a")
-        const file = new Blob([ui_schema], { type: "text/plain" })
+        const file = new Blob([ui_buffer], { type: "text/plain" })
         element.href = URL.createObjectURL(file)
         element.download = "schema.json"
         document.body.appendChild(element)
         element.click()
     }
 
-    function NewForm() {
-        SetUiBuffer("{}")
-        SetUiSchema("{}")
+    function DownloadDataSchema() {
+        const element = document.createElement("a")
+        const file = new Blob([data_buffer], { type: "text/plain" })
+        element.href = URL.createObjectURL(file)
+        element.download = "schema.json"
+        document.body.appendChild(element)
+        element.click()
+    }
+
+    function NewDataFile() {
+        SetDataSchema("{}")
+        SetDataBuffer("{}")
         SetIsDirty(false)
     }
+
+    function NewUiFile() {
+        SetUiSchema("{}")
+        SetUiBuffer("{}")
+        SetIsDirty(false)
+    }
+
+    function OpenDataFile() {
+        OpenFile({
+            SetBuffer: SetDataBuffer,
+            SetSchema: SetDataSchema,
+            SetIsDirty: SetIsDirty
+        })
+    }
+
+    function OpenUiFile() {
+        OpenFile({
+            SetBuffer: SetUiBuffer,
+            SetSchema: SetUiSchema,
+            SetIsDirty: SetIsDirty
+        })
+    }
+
+    function OnCut() {}
+
+    function OnCopy() {}
+
+    function OnPaste() {}
+
+    function OnDelete() {}
+
+    function OnShowFind() {}
+
+    function OnShowReplace() {}
+
+    function OnSettings() {}
 
     return (
         <>
@@ -75,19 +141,32 @@ export function MainMenu() {
                 <MenubarMenu>
                     <MenubarTrigger>File</MenubarTrigger>
                     <MenubarContent>
-                        <MenubarItem onClick={NewForm}>New Form</MenubarItem>
-                        <MenubarItem
-                            onClick={() => {
-                                ref.current?.click()
-                            }}
-                            onChange={FileChange}
-                        >
-                            Open File
-                        </MenubarItem>
+                        <MenubarItem onClick={NewDataFile}>New Data Schema</MenubarItem>
+                        <MenubarItem onClick={NewUiFile}>New UI Schema</MenubarItem>
                         <MenubarSeparator />
-                        <MenubarItem onClick={SaveFile}>Save File</MenubarItem>
+                        <MenubarItem onClick={OpenDataFile}>Open Data Schema</MenubarItem>
+                        <MenubarItem onClick={OpenUiFile}>Open UI Schema</MenubarItem>
                         <MenubarSeparator />
-                        <MenubarItem onClick={DownloadFile}>Download File</MenubarItem>
+                        <MenubarItem onClick={SaveDataFile}>Save Data Schema</MenubarItem>
+                        <MenubarItem onClick={SaveUiFile}>Save UI Schema</MenubarItem>
+                        <MenubarItem onClick={SaveAllFiles}>Save All Schema</MenubarItem>
+                        <MenubarSeparator />
+                        <MenubarItem onClick={DownloadDataSchema}>Download Data Schema</MenubarItem>
+                        <MenubarItem onClick={DownloadUiSchema}>Download UI Schema</MenubarItem>
+                    </MenubarContent>
+                </MenubarMenu>
+                <MenubarMenu>
+                    <MenubarTrigger>Edit</MenubarTrigger>
+                    <MenubarContent>
+                        <MenubarItem onClick={OnCut}>Cut</MenubarItem>
+                        <MenubarItem onClick={OnCopy}>Copy</MenubarItem>
+                        <MenubarItem onClick={OnPaste}>Paste</MenubarItem>
+                        <MenubarItem onClick={OnDelete}>Delete</MenubarItem>
+                        <MenubarSeparator />
+                        <MenubarItem onClick={OnShowFind}>Find</MenubarItem>
+                        <MenubarItem onClick={OnShowReplace}>Replace</MenubarItem>
+                        <MenubarSeparator />
+                        <MenubarItem onClick={OnSettings}>Settings</MenubarItem>
                     </MenubarContent>
                 </MenubarMenu>
             </Menubar>

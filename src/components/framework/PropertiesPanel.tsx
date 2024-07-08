@@ -17,7 +17,7 @@ export function PropertiesPanel() {
 
     return (
         <motion.aside
-            className={`fixed top-14 right-0 bottom-0 bg-background text-foreground z-0 p-4 shadow-2xl ${minimize ? "w-12" : "w-96"}`}
+            className={`fixed top-14 right-0 bottom-0 bg-background text-foreground z-50 p-4 shadow-2xl ${minimize ? "w-12" : "w-96"}`}
             layout
             layoutId="properties-panel"
         >

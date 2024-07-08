@@ -1,4 +1,4 @@
-import {ReactNode} from "react";
+import { ReactNode } from "react"
 
 interface IToggleButtonProps {
     view: string
@@ -9,9 +9,11 @@ interface IToggleButtonProps {
 }
 
 export function ToggleButton(props: IToggleButtonProps) {
-
     return (
-        <button className={`${props.is_active?"bg-neutral-500 text-neutral-50":""} flex flex-row h-8 px-4 py-2 justify-center items-center rounded text-sm`} onClick={()=>props.toggleView(props.view)}>
+        <button
+            className={`${props.is_active ? "bg-primary text-primary-foreground" : ""} flex flex-row h-8 px-4 py-2 justify-center items-center rounded text-sm`}
+            onClick={() => props.toggleView(props.view)}
+        >
             <div className="pr-2">{props.icon}</div>
             <div>{props.children}</div>
         </button>
