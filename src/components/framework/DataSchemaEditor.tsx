@@ -1,7 +1,7 @@
 import React, { useContext } from "react"
 import CodeMirror from "@uiw/react-codemirror"
 import { json } from "@codemirror/lang-json"
-import { basicLight, gruvboxDark } from "@uiw/codemirror-themes-all"
+import {xcodeDark, xcodeLight} from "@uiw/codemirror-themes-all"
 import { useTheme } from "@/components/contexts/ThemeProvider.tsx"
 import { SchemaDesignerContext } from "@/components/contexts/SchemaContextProvider.tsx"
 import { vim } from "@replit/codemirror-vim"
@@ -12,7 +12,7 @@ export function DataSchemaEditor() {
     const theme = useTheme()
     const { vim_mode } = useContext(VimModeContext)
 
-    const code_theme = theme.theme === "dark" ? gruvboxDark : basicLight
+    const code_theme = theme.theme === "dark" ? xcodeDark : xcodeLight
 
     function OnDrop(e: any) {
         e.preventDefault()

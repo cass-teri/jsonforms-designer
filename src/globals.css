@@ -35,38 +35,30 @@
         --radius: 0.5rem;
     }
 
-    .other {
-        --background: rgb(40, 40, 40);
-        --foreground: rgb(235, 219, 178);
-        --selectionMatch: rgba(185, 157, 85, 0.36);
-        --lineHighlight: rgba(186, 161, 96, 0.17);
-        --gutterForeground: rgb(124, 111, 100, 0.36)
-    }
-
     .dark {
         --background: rgb(40, 40, 40);
-        --foreground: rgb(235, 219, 178);
+        --foreground: rgb(178, 219, 178);
 
-        --card: rgba(124, 111, 100, 0.36);
-        --card-foreground: rgb(235, 219, 178);
+        --card: rgba(28,28,28);
+        --card-foreground: rgb(178, 219, 178);
 
         --popover: rgb(40, 40, 40);
-        --popover-foreground: rgb(235, 219, 178);
+        --popover-foreground: rgb(178, 178, 219);
 
-        --primary: rgb(186, 161, 96);
+        --primary: rgb(178, 178, 219);
         --primary-foreground: rgb(40, 40, 40);
 
         --secondary: rgb(60, 60, 60);
-        --secondary-foreground: rgb(235, 219, 178);
+        --secondary-foreground: rgb(219, 178, 219);
 
         --muted: rgb(80, 80, 80);
         --muted-foreground: rgb(20, 20, 20);
 
         --accent: rgb(20, 20, 20);
-        --accent-foreground: rgb(186, 161, 96);
+        --accent-foreground: rgb(178, 178 ,219);
 
-        --destructive: rgb(127, 29, 29);
-        --destructive-foreground: rgb(248, 250, 252);
+        --destructive: rgb(219, 178,178);
+        --destructive-foreground: rgb(22, 22, 22);
 
         --border: rgb(124, 111, 100, 0.36);
         --input: rgb(80, 80, 80);
@@ -114,6 +106,10 @@
         width: 40%;
         height: 40%;
         object-fit: cover;
+    }
+
+    input {
+        @apply border-b border-orange-300 bg-green-100 text-primary
     }
 
 }

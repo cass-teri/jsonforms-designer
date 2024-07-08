@@ -51,7 +51,7 @@ export function Header(props: IHeaderProps) {
     }
 
     return (
-        <div className="fixed flex flex-row bg-accent text-accent-foreground left-0 top-0 right-0 h-14 items-center justify-between shadow-2xl">
+        <div className="fixed flex flex-row bg-accent text-accent-foreground left-0 top-0 right-0 h-14 items-center justify-between shadow">
             <div className="flex flex-row items-center justify-center pl-4">
                 <MainMenu></MainMenu>
                 <div className="flex flex-row pl-4">
