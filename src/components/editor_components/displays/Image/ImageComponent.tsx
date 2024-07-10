@@ -1,14 +1,27 @@
-interface IImageProperties {
-    src: string
-    alt: string
-}
+import { ReactNode } from "react"
+import { DisplayComponent } from "@/components/editor_components/displays/DisplayComponent.ts"
 
-interface IImageComponentProps {
-    properties?: IImageProperties
-    id?: string
-}
+export class ImageComponent extends DisplayComponent {
+    src: string = ""
+    alt: string = ""
 
-export function ImageComponent(props: IImageComponentProps) {
-    const properties = props.properties
-    return <img src={properties?.src} alt={properties?.alt} />
+    SetSrc(src: string): void {
+        this.src = src
+    }
+
+    Src(): string {
+        return this.src
+    }
+
+    SetAlt(alt: string): void {
+        this.alt = alt
+    }
+
+    Alt(): string {
+        return this.alt
+    }
+
+    render(): ReactNode {
+        return <img src={this.src} alt={this.alt} />
+    }
 }

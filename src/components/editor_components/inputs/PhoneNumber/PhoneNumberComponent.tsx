@@ -1,11 +1,7 @@
-import { IEditorComponent } from "@/components/editor_components/IEditorComponent.ts"
+import { InputComponent } from "@/components/editor_components/inputs/InputComponent.ts"
 
-interface IPhoneNumberInputProps extends IEditorComponent {
-    properties?: object
-}
-
-export function PhoneNumberComponent(props: IPhoneNumberInputProps) {
-    console.log(props.properties)
-
-    return <input type="tel" />
+export class PhoneNumberComponent extends InputComponent {
+    render() {
+        return <input type="tel" />
+    }
 }

@@ -1,13 +1,8 @@
-import { IEditorComponent } from "@/components/editor_components/IEditorComponent.ts"
+import { InputComponent } from "@/components/editor_components/inputs/InputComponent.ts"
+import React from "react"
 
-interface IFileUploadProperties {}
-
-interface IFileUploadProps extends IEditorComponent {
-    properties?: IFileUploadProperties
-}
-
-export function FileUploadComponent(props: IFileUploadProps) {
-    console.log(props.properties)
-
-    return <input type="file" />
+export class FileUploadComponent extends InputComponent {
+    render(): React.ReactNode {
+        return <input type="file" />
+    }
 }

@@ -1,11 +1,8 @@
-import { IEditorComponent } from "@/components/editor_components/IEditorComponent.ts"
+import { InputComponent } from "@/components/editor_components/inputs/InputComponent.ts"
+import { ReactNode } from "react"
 
-export interface IRadioInputProps extends IEditorComponent {
-    properties?: object
-}
-
-export default function RadioComponent(props: IRadioInputProps) {
-    console.log(props.properties)
-
-    return <input type="radio" />
+export class RadioComponent extends InputComponent {
+    render(): ReactNode {
+        return <input type="radio" />
+    }
 }

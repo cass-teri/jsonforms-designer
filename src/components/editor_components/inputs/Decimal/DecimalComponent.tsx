@@ -1,18 +1,15 @@
-import { IInputProps } from "@/components/editor_components/inputs/IInputProperties.ts"
+import { InputComponent } from "@/components/editor_components/inputs/InputComponent.ts"
 
-export interface IDecimalProperties {
-    id: string
-    label?: string
-    value?: number
-}
+export class DecimalComponent extends InputComponent {
+    label: string = ""
+    default_value: number = 0
 
-export interface IDecimalComponentProps extends IInputProps {
-    id: string
-    properties?: IDecimalProperties
-}
-
-export default function DecimalComponent(props: IDecimalComponentProps) {
-    console.log(props.properties)
-
-    return <input type="number" step="0.01" />
+    render() {
+        return (
+            <>
+                <label>{this.label}</label>
+                <input type="number" step="0.01" defaultValue={this.default_value} />
+            </>
+        )
+    }
 }

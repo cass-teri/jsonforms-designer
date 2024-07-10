@@ -1,18 +1,14 @@
-export interface ILinkProps {
-    href: string
-    label: string
-}
+import { DisplayComponent } from "@/components/editor_components/displays/DisplayComponent.ts"
 
-interface ILinkComponentProps {
-    properties?: ILinkProps
-    id?: string
-}
+export class LinkComponent extends DisplayComponent {
+    label: string = ""
+    href: string = ""
 
-export function LinkComponent(props: ILinkComponentProps) {
-    const properties = props.properties
-    return (
-        <a href={properties?.href} className="text-blue-500">
-            {properties?.label}
-        </a>
-    )
+    render() {
+        return (
+            <a href={this.href} className="text-blue-500">
+                {this.label}
+            </a>
+        )
+    }
 }

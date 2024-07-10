@@ -1,5 +1,3 @@
-import { IProperties } from "@/components/editor_components/IProperties.ts"
-
-export interface IDisplay extends IProperties {
+export interface IDisplay {
     properties: object
 }

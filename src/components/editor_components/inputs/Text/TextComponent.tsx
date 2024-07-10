@@ -1,19 +1,9 @@
-import { IEditorComponent } from "@/components/editor_components/IEditorComponent.ts"
+import { InputComponent } from "@/components/editor_components/inputs/InputComponent.ts"
 
-interface ITextProperties {
-    multiline: boolean
-    width: number
-}
+export class TextComponent extends InputComponent {
+    is_multiline: boolean = false
 
-interface ITextInputProps extends IEditorComponent {
-    properties?: ITextProperties
-}
-
-export default function TextComponent(props: ITextInputProps) {
-    let is_multiline = false
-    if (props.properties !== null && props.properties?.multiline !== null) {
-        is_multiline = props.properties?.["multiline"] ?? false
+    render() {
+        return this.is_multiline ? <textarea></textarea> : <input type="text" />
     }
-
-    return is_multiline ? <textarea></textarea> : <input type="text" />
 }

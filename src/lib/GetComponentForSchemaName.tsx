@@ -1,11 +1,11 @@
-import TextComponent from "@/components/editor_components/inputs/Text/TextComponent.tsx"
+import { TextComponent } from "@/components/editor_components/inputs/Text/TextComponent.tsx"
 import { CheckboxComponent } from "@/components/editor_components/inputs/Checkbox/CheckboxComponent.tsx"
-import NumberComponent from "@/components/editor_components/inputs/Number/NumberComponent.tsx"
-import DecimalComponent from "@/components/editor_components/inputs/Decimal/DecimalComponent.tsx"
-import DateComponent from "@/components/editor_components/inputs/Date/DateComponent.tsx"
-import DropdownComponent from "@/components/editor_components/inputs/Dropdown/DropdownComponent.tsx"
+import { IntegerComponent } from "@/components/editor_components/inputs/Integer/IntegerComponent.tsx"
+import { DecimalComponent } from "@/components/editor_components/inputs/Decimal/DecimalComponent.tsx"
+import { DateComponent } from "@/components/editor_components/inputs/Date/DateComponent.tsx"
+import { DropdownComponent } from "@/components/editor_components/inputs/Dropdown/DropdownComponent.tsx"
 import { EmailComponent } from "@/components/editor_components/inputs/Email/EmailComponent.tsx"
-import RadioComponent from "@/components/editor_components/inputs/Radio/RadioComponent.tsx"
+import { RadioComponent } from "@/components/editor_components/inputs/Radio/RadioComponent.tsx"
 import { PostalCodeComponent } from "@/components/editor_components/inputs/PostalCode/PostalCodeComponent.tsx"
 import { PhoneNumberComponent } from "@/components/editor_components/inputs/PhoneNumber/PhoneNumberComponent.tsx"
 import { MarkdownComponent } from "@/components/editor_components/displays/Markdown/MarkdownComponent.tsx"
@@ -16,11 +16,9 @@ import { FormComponent } from "@/components/editor_components/containers/Form/Fo
 import { BulletComponent } from "@/components/editor_components/displays/Bullet/BulletComponent.tsx"
 import { LabelComponent } from "@/components/editor_components/displays/Label/LabelComponent.tsx"
 import { ImageComponent } from "@/components/editor_components/displays/Image/ImageComponent.tsx"
-import { VideoComponent } from "@/components/editor_components/displays/Video/VideoComponent.tsx"
 import { FileUploadComponent } from "@/components/editor_components/inputs/FileUpload/FileUploadComponent.tsx"
 import { ParagraphComponent } from "@/components/editor_components/displays/Paragraph/ParagraphComponent.tsx"
 import { LinkComponent } from "@/components/editor_components/displays/Link/LinkComponent.tsx"
-import { ButtonComponent } from "@/components/editor_components/control/Button/ButtonComponent.tsx"
 import { HorizontalComponent } from "@/components/editor_components/containers/Horizontal/HorizontalComponent.tsx"
 import { VerticalComponent } from "@/components/editor_components/containers/Vertical/VerticalComponents.tsx"
 import { GroupComponent } from "@/components/editor_components/containers/Group/GroupComponent.tsx"
@@ -29,57 +27,53 @@ import { HeadingComponent } from "@/components/editor_components/displays/Headin
 export function GetComponentForSchemaName(data: string) {
     switch (data) {
         case "form":
-            return <FormComponent id={createId()} />
+            return new FormComponent(createId(), null)
         case "horizontal":
-            return <HorizontalComponent id={createId()} />
+            return new HorizontalComponent(createId(), null)
         case "vertical":
-            return <VerticalComponent id={createId()} />
+            return new VerticalComponent(createId(), null)
         case "repeater":
-            return <RepeaterComponent id={createId()} />
+            return new RepeaterComponent(createId(), null)
         case "group":
-            return <GroupComponent id={createId()} />
+            return new GroupComponent(createId(), null)
         case "checkbox":
-            return <CheckboxComponent id={createId()} />
+            return new CheckboxComponent(createId(), null)
         case "text":
-            return <TextComponent id={createId()} />
+            return new TextComponent(createId(), null)
         case "number":
-            return <NumberComponent id={createId()} />
+            return new IntegerComponent(createId(), null)
         case "decimal":
-            return <DecimalComponent id={createId()} />
+            return new DecimalComponent(createId(), null)
         case "date":
-            return <DateComponent id={createId()} />
+            return new DateComponent(createId(), null)
         case "dropdown":
-            return <DropdownComponent id={createId()} />
+            return new DropdownComponent(createId(), null)
         case "email":
-            return <EmailComponent id={createId()} />
+            return new EmailComponent(createId(), null)
         case "markdown":
-            return <MarkdownComponent id={createId()} />
+            return new MarkdownComponent(createId(), null)
         case "radio":
-            return <RadioComponent id={createId()} />
+            return new RadioComponent(createId(), null)
         case "postal_code":
-            return <PostalCodeComponent id={createId()} />
+            return new PostalCodeComponent(createId(), null)
         case "phone":
-            return <PhoneNumberComponent id={createId()} />
+            return new PhoneNumberComponent(createId(), null)
         case "time":
-            return <TimeComponent id={createId()} />
+            return new TimeComponent(createId(), null)
         case "bullet":
-            return <BulletComponent id={createId()} />
+            return new BulletComponent(createId(), null)
         case "label":
-            return <LabelComponent id={createId()} />
+            return new LabelComponent(createId(), null)
         case "image":
-            return <ImageComponent id={createId()} />
-        case "video":
-            return <VideoComponent id={createId()} />
+            return new ImageComponent(createId(), null)
         case "file_upload":
-            return <FileUploadComponent id={createId()} />
+            return new FileUploadComponent(createId(), null)
         case "paragraph":
-            return <ParagraphComponent id={createId()} />
-        case "button":
-            return <ButtonComponent id={createId()} />
+            return new ParagraphComponent(createId(), null)
         case "link":
-            return <LinkComponent id={createId()} />
+            return new LinkComponent(createId(), null)
         case "heading":
-            return <HeadingComponent id={createId()} />
+            return new HeadingComponent(createId(), null)
         default:
             console.log(`Unknown component ${data}`)
     }

@@ -1,17 +1,14 @@
-import { IEditorComponent } from "@/components/editor_components/IEditorComponent.ts"
+import { InputComponent } from "@/components/editor_components/inputs/InputComponent.ts"
 
-interface IPostalCodeProps {
-    id: string
-    label: string
-    value: string
-}
+export class PostalCodeComponent extends InputComponent {
+    label: string | null = null
 
-interface IPostalCodeInputProps extends IEditorComponent {
-    properties?: IPostalCodeProps
-}
-
-export function PostalCodeComponent(props: IPostalCodeInputProps) {
-    console.log(props.properties)
-
-    return <input type="text" />
+    render() {
+        return (
+            <>
+                <label>{this.label ?? "Postal Code"}</label>
+                <input type="text" placeholder={this.placeholder ?? undefined} />
+            </>
+        )
+    }
 }

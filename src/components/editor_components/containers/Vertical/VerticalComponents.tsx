@@ -1,15 +1,18 @@
-import { ReactNode } from "react"
+import { ContainerComponent } from "@/components/editor_components/containers/ContainerComponent.tsx"
+import { IContainer } from "@/components/editor_components/containers/IContainer.ts"
 
-interface IVerticalProps {
-    children?: ReactNode
-}
+export class VerticalComponent extends ContainerComponent {
+    constructor(id: string, parent: IContainer | null) {
+        super(id, parent)
+    }
 
-interface IVerticalComponentProps {
-    children?: ReactNode
-    properties?: IVerticalProps
-    id?: string
-}
-
-export function VerticalComponent(props: IVerticalComponentProps) {
-    return <div>{props.children}</div>
+    render() {
+        return (
+            <div>
+                {this.children.map((child) => {
+                    return child.render()
+                })}
+            </div>
+        )
+    }
 }

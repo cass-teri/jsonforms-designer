@@ -1,22 +1,13 @@
-import { IProperties } from "@/components/editor_components/IProperties.ts"
+import { DisplayComponent } from "@/components/editor_components/displays/DisplayComponent.ts"
 
-export interface ILabelProperties extends IProperties {
-    label?: string
-}
+export class LabelComponent extends DisplayComponent {
+    label: string = ""
 
-interface ILabelComponentProps {
-    properties?: ILabelProperties
-    id?: string
-}
-
-export function LabelComponent(props: ILabelComponentProps) {
-    const properties = props.properties
-    let label = ""
-    if (properties) {
-        if (properties.label) {
-            label = properties.label
-        }
+    SetLabel(label: string): void {
+        this.label = label
     }
 
-    return <label className="text-lg">{label}</label>
+    render() {
+        return <label className="text-lg">{this.label}</label>
+    }
 }

@@ -3,7 +3,7 @@ import { motion } from "framer-motion"
 import { MarkdownButton } from "@/components/editor_components/displays/Markdown/MarkdownButton.tsx"
 import { BulletButton } from "@/components/editor_components/displays/Bullet/BulletButton.tsx"
 import { FormButton } from "@/components/editor_components/containers/Form/FormButton.tsx"
-import { NumberButton } from "@/components/editor_components/inputs/Number/NumberButton.tsx"
+import { IntegerButton } from "@/components/editor_components/inputs/Integer/IntegerButton.tsx"
 import { EmailButton } from "@/components/editor_components/inputs/Email/EmailButton.tsx"
 import { LabelButton } from "@/components/editor_components/displays/Label/LabelButton.tsx"
 import { ImageButton } from "@/components/editor_components/displays/Image/ImageButton.tsx"
@@ -18,7 +18,6 @@ import { ButtonButton } from "@/components/editor_components/control/Button/Butt
 import { HorizontalButton } from "@/components/editor_components/containers/Horizontal/HorizontalButton.tsx"
 import { VerticalButton } from "@/components/editor_components/containers/Vertical/VerticalButton.tsx"
 import { TextButton } from "@/components/editor_components/inputs/Text/TextButton.tsx"
-import { PageButton } from "@/components/editor_components/containers/Page/PageButton.tsx"
 import { GroupButton } from "@/components/editor_components/containers/Group/GroupButton.tsx"
 import { RepeaterButton } from "@/components/editor_components/containers/Repeater/RepeaterButton.tsx"
 import { LinkButton } from "@/components/editor_components/displays/Link/LinkButton.tsx"
@@ -34,7 +33,6 @@ export function ComponentPanel() {
                 <ComponentButton componentButton={FormButton} />
                 <ComponentButton componentButton={HorizontalButton} />
                 <ComponentButton componentButton={VerticalButton} />
-                <ComponentButton componentButton={PageButton} />
                 <ComponentButton componentButton={GroupButton} />
                 <ComponentButton componentButton={RepeaterButton} />
             </div>
@@ -43,7 +41,7 @@ export function ComponentPanel() {
             <hr />
             <div className="grid grid-cols-2 my-3">
                 <ComponentButton componentButton={TextButton} />
-                <ComponentButton componentButton={NumberButton} />
+                <ComponentButton componentButton={IntegerButton} />
                 <ComponentButton componentButton={DecimalButton} />
                 <ComponentButton componentButton={DropdownButton} />
                 <ComponentButton componentButton={CheckboxButton} />

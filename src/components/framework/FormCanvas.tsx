@@ -2,7 +2,7 @@ import { DropIndicator } from "@/components/framework/DropIndicator.tsx"
 import { ReactNode, useState } from "react"
 
 import { useTheme } from "@/components/contexts/ThemeProvider"
-import { GetComponentForSchemaName } from "@/components/generation/GetComponentForSchemaName.tsx"
+import { GetComponentForSchemaName } from "@/lib/GetComponentForSchemaName.tsx"
 
 export default function FormCanvas() {
     const { theme } = useTheme()
@@ -14,6 +14,8 @@ export default function FormCanvas() {
     function OnDrop(schema: string | object) {
         if (typeof schema === "string") {
             const component = GetComponentForSchemaName(schema)
+            const type = typeof component
+            console.log(`Component type: ${type}`)
 
             SetChildren((prev) => [...prev, component])
         } else {

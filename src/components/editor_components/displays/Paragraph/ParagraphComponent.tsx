@@ -1,17 +1,21 @@
+import { DisplayComponent } from "../DisplayComponent"
+
 export interface IParagraphProps {
     text: string
 }
 
-import { IPageComponentProps } from "@/components/editor_components/containers/Page/PageComponent.tsx"
+export class ParagraphComponent extends DisplayComponent {
+    text: string = ""
 
-export function ParagraphComponent(props: IPageComponentProps) {
-    const properties = props.properties as IParagraphProps
-    let text = ""
-    if (properties) {
-        if (properties.text) {
-            text = properties.text
-        }
+    SetText(text: string): void {
+        this.text = text
     }
 
-    return <p className="text-lg">{text}</p>
+    Text(): string {
+        return this.text
+    }
+
+    render() {
+        return <p className="text-lg">{this.text}</p>
+    }
 }

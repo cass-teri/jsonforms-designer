@@ -1,25 +1,15 @@
-import { IEditorComponent } from "@/components/editor_components/IEditorComponent.ts"
+import { InputComponent } from "@/components/editor_components/inputs/InputComponent.ts"
 
-interface ICheckboxInputProps {
-    properties?: object
-    id?: string
-}
+export class CheckboxComponent extends InputComponent {
+    label: string = ""
+    default_value: boolean = false
 
-interface ICheckbox extends IEditorComponent {
-    label?: string
-    value?: boolean
-}
-
-export function CheckboxComponent(props: ICheckboxInputProps) {
-    const properties = props.properties as ICheckbox
-
-    const label = properties?.label ?? "Checkbox"
-    const value = properties?.value ?? false
-
-    return (
-        <div className="flex flex-row items-center bg-pink-50">
-            <input type="checkbox" className="mr-2" checked={value} />
-            <label>{label}</label>
-        </div>
-    )
+    render() {
+        return (
+            <div className="flex flex-row items-center bg-pink-50">
+                <input type="checkbox" className="mr-2" checked={this.default_value} />
+                <label>{this.label}</label>
+            </div>
+        )
+    }
 }

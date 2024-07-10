@@ -1,15 +1,11 @@
-type IEmailProperties = {
-    id: string
-    value: string
-}
+import { InputComponent } from "@/components/editor_components/inputs/InputComponent.ts"
 
-interface IEmailInputProps {
-    properties?: IEmailProperties
-    id?: string
-}
+export class EmailComponent extends InputComponent {
+    id: string = ""
+    value: string = ""
+    default_value: string = ""
 
-export function EmailComponent(props: IEmailInputProps) {
-    const properties = props.properties
-
-    return <input id={properties?.id} type="email" value={properties?.value} />
+    render() {
+        return <input id={this.id} type="email" value={this.value} defaultValue={this.default_value} />
+    }
 }

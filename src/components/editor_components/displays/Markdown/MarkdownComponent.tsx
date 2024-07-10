@@ -1,26 +1,19 @@
-import { marked } from "marked"
 import DOMPurify from "dompurify"
+import { DisplayComponent } from "@/components/editor_components/displays/DisplayComponent.ts"
+import { ReactNode } from "react"
 
-interface IMarkdownProps {
-    markdown?: string
-    id?: string
-}
+export class MarkdownComponent extends DisplayComponent {
+    markdown: string = ""
 
-export function MarkdownComponent(props: IMarkdownProps) {
-    if (!props.markdown) {
-        return <div>No Markdown Detected</div>
-    }
-    const markdown = marked(props.markdown, { async: false })
-
-    let md = ""
-
-    if (typeof markdown == "string") {
-        md = markdown
-    } else {
-        markdown.then((result) => {
-            md = result
-        })
+    SetMarkdown(markdown: string): void {
+        this.markdown = markdown
     }
 
-    return <p className="flex flex-row" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(md) }}></p>
+    Markdown(): string {
+        return this.markdown
+    }
+
+    render(): ReactNode {
+        return <p className="flex flex-row" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(this.markdown) }}></p>
+    }
 }

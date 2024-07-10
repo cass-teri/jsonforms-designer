@@ -1,11 +1,13 @@
-import { IContainer } from "@/components/editor_components/containers/IContainer.ts"
+import { ContainerComponent } from "@/components/editor_components/containers/ContainerComponent.tsx"
 
-interface IHorizontalProperties {}
-
-interface IHorizontalComponentProps extends IContainer {
-    properties?: IHorizontalProperties
-}
-
-export function HorizontalComponent(props: IHorizontalComponentProps) {
-    return <div id={props.id}>{props.children}</div>
+export class HorizontalComponent extends ContainerComponent {
+    render() {
+        return (
+            <div id={this.id}>
+                {this.children.map((child) => {
+                    return child.render()
+                })}
+            </div>
+        )
+    }
 }

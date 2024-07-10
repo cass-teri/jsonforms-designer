@@ -1,15 +1,16 @@
 import { InputComponent } from "@/components/editor_components/inputs/InputComponent.ts"
 
-export class DateComponent extends InputComponent {
+export class IntegerComponent extends InputComponent {
+    id: string = ""
     label: string = ""
-    default_value: string = ""
+    value: number = 0
 
     render() {
         return (
-            <>
+            <div id={this.id}>
                 <label>{this.label}</label>
-                <input type="date" defaultValue={this.default_value} />
-            </>
+                <input type="number" />
+            </div>
         )
     }
 }

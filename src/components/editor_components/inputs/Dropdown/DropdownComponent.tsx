@@ -1,21 +1,32 @@
-export interface IDropdownProperties {
-    id: string
-    value: string
-}
+import { InputComponent } from "@/components/editor_components/inputs/InputComponent.ts"
 
-export interface DropDownInputProps {
-    properties?: object
-    id?: string
-}
+export class DropdownComponent extends InputComponent {
+    label: string = ""
+    default_value: string = ""
 
-export default function DropdownComponent(props: DropDownInputProps) {
-    console.log(props.properties)
+    SetLabel(label: string): void {
+        this.label = label
+    }
 
-    return (
-        <select>
-            <option>Option 1</option>
-            <option>Option 2</option>
-            <option>Option 3</option>
-        </select>
-    )
+    Label(): string {
+        return this.label
+    }
+
+    DefaultValue(): string {
+        return this.default_value
+    }
+
+    SetDefaultValue(default_value: string): void {
+        this.default_value = default_value
+    }
+
+    render() {
+        return (
+            <select>
+                <option>Option 1</option>
+                <option>Option 2</option>
+                <option>Option 3</option>
+            </select>
+        )
+    }
 }

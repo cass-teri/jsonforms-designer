@@ -1,11 +1,8 @@
-import { IEditorComponent } from "@/components/editor_components/IEditorComponent.ts"
+import { InputComponent } from "@/components/editor_components/inputs/InputComponent.ts"
+import { ReactNode } from "react"
 
-export interface ITimeInputProps extends IEditorComponent {
-    properties?: object
-}
-
-export function TimeComponent(props: ITimeInputProps) {
-    console.log(props.properties)
-
-    return <input type="time" />
+export class TimeComponent extends InputComponent {
+    render(): ReactNode {
+        return <input type="time" />
+    }
 }
