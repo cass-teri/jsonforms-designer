@@ -7,7 +7,6 @@ import { IntegerButton } from "@/components/editor_components/inputs/Integer/Int
 import { EmailButton } from "@/components/editor_components/inputs/Email/EmailButton.tsx"
 import { LabelButton } from "@/components/editor_components/displays/Label/LabelButton.tsx"
 import { ImageButton } from "@/components/editor_components/displays/Image/ImageButton.tsx"
-import { VideoButton } from "@/components/editor_components/displays/Video/VideoButton.tsx"
 import { DecimalButton } from "@/components/editor_components/inputs/Decimal/DecimalButton.tsx"
 import { CheckboxButton } from "@/components/editor_components/inputs/Checkbox/CheckboxButton.tsx"
 import { RadioButton } from "@/components/editor_components/inputs/Radio/RadioButton.tsx"
@@ -60,7 +59,6 @@ export function ComponentPanel() {
                 <ComponentButton componentButton={LinkButton} />
                 <ComponentButton componentButton={ParagraphButton} />
                 <ComponentButton componentButton={MarkdownButton} />
-                <ComponentButton componentButton={VideoButton} />
             </div>
             <hr />
             <div className="flex flex-row justify-center items-center ">Control</div>

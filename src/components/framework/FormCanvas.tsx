@@ -1,15 +1,38 @@
 import { DropIndicator } from "@/components/framework/DropIndicator.tsx"
-import { ReactNode, useState } from "react"
+import { ReactNode, useEffect, useState } from "react"
 
 import { useTheme } from "@/components/contexts/ThemeProvider"
-import { GetComponentForSchemaName } from "@/lib/GetComponentForSchemaName.tsx"
+import { GetComponentForSchemaName } from "@/lib/GetComponentForSchemaName"
+import { useSchema } from "@/components/contexts/SchemaContextProvider"
+import { DataSchemaToModel } from "@/lib/DataSchemaToModel"
+import { UiSchemaToAst } from "@/lib/UiSchemaToAst"
+import { BuildDragAndDropTree } from "@/components/framework/BuildDragAndDropTree"
+import { useStatusMessage } from "@/components/contexts/StatusMessageProvider.tsx"
 
 export default function FormCanvas() {
     const { theme } = useTheme()
+    const { data_buffer, ui_buffer } = useSchema()
+    const { SetStatusMessage } = useStatusMessage()
     const bg_color = theme === "dark" ? "bg-neutral-800" : "bg-white"
     const component_color = theme === "dark" ? "bg-accent" : "bg-white"
+    const [data_model, SetDataModel] = useState<object | null>(null)
 
     const [children, SetChildren] = useState<ReactNode[]>([])
+
+    useEffect(() => {
+        let status = ""
+        if (data_buffer) {
+            try {
+                const model = DataSchemaToModel(data_buffer)
+                const ast = UiSchemaToAst(ui_buffer)
+                const react_dnd_base = BuildDragAndDropTree(model, ast)
+                status = ""
+                SetStatusMessage({ message: status, type: "success" })
+            } catch (e) {
+                SetStatusMessage({ message: status, type: "error" })
+            }
+        }
+    }, [data_buffer, ui_buffer, SetStatusMessage])
 
     function OnDrop(schema: string | object) {
         if (typeof schema === "string") {

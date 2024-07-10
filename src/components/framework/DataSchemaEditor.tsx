@@ -1,4 +1,4 @@
-import React, { useContext } from "react"
+import { useContext } from "react"
 import { useTheme } from "@/components/contexts/ThemeProvider.tsx"
 import { SchemaDesignerContext } from "@/components/contexts/SchemaContextProvider.tsx"
 import Editor from "@monaco-editor/react"

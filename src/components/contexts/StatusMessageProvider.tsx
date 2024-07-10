@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useState } from "react"
+import { createContext, ReactNode, useContext, useState } from "react"
 
 export type StatusMessage = {
     message: string
@@ -27,9 +27,23 @@ export interface IStatusMessageContextProviderProps {
 const StatusMessageContext = createContext(initialStatusMessageContext)
 
 export function StatusMessageContextProvider(props: IStatusMessageContextProviderProps) {
-    const [status_message, SetStatusMessage] = useState<StatusMessage>(initialStatusMessage)
+    const [status_message, SetStatusMessageInner] = useState<StatusMessage>(initialStatusMessage)
+
+    function SetStatusMessage(newStatusMessage: StatusMessage) {
+        console.log(`Setting status message: ${newStatusMessage.message}`)
+        SetStatusMessageInner(newStatusMessage)
+    }
 
     const value: StatusMessageContext = { status_message, SetStatusMessage }
 
     return <StatusMessageContext.Provider value={value}>{props.children}</StatusMessageContext.Provider>
+}
+
+export const useStatusMessage = () => {
+    const context = useContext(StatusMessageContext)
+    if (context === undefined) {
+        throw new Error("useStatusMessage must be used within a StatusMessageProvider")
+    }
+
+    return context
 }

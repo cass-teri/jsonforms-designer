@@ -3,7 +3,6 @@ import { MainMenu } from "@/components/framework/skeleton/header/MainMenu.tsx"
 import { ToggleButton } from "@/components/framework/ToggleButton.tsx"
 import { BiSolidPaintRoll } from "react-icons/bi"
 import { VscOpenPreview, VscSaveAll } from "react-icons/vsc"
-import { VimToggle } from "@/components/framework/skeleton/header/VimToggle.tsx"
 import { useSchema } from "@/components/contexts/SchemaContextProvider.tsx"
 import { AiOutlineFileZip } from "react-icons/ai"
 import { LuFileJson } from "react-icons/lu"
@@ -103,7 +102,6 @@ export function Header(props: IHeaderProps) {
             </div>
 
             <div className="flex flex-row items-center justify-center">
-                <VimToggle className="hover:bg-primary hover:text-primary-foreground w-10 h-10 flex flex-col justify-center items-center rounded" />
                 <ThemeToggle className="hover:bg-primary hover:text-primary-foreground w-10 h-10 flex flex-col justify-center items-center rounded" />
             </div>
         </div>
