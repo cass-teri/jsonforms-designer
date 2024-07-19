@@ -18,8 +18,6 @@ type SchemaContextType = {
     data_buffer: string
     SetDataBuffer: (buffer: string) => void
 
-    ast: object
-
     is_dirty: boolean
     SetIsDirty: (is_dirty: boolean) => void
 }
@@ -37,8 +35,6 @@ const initialSchemaContext: SchemaContextType = {
     data_buffer: "",
     SetDataBuffer: (_: string) => {},
 
-    ast: {},
-
     is_dirty: false,
     SetIsDirty: (_: boolean) => {}
 }
@@ -50,7 +46,6 @@ export function SchemaContextProvider(props: ISchemaContextProviderProps) {
     const [data_schema, SetDataSchemaInner] = useState("{}")
     const [data_buffer, SetDataBuffer] = useState("{}")
     const [ui_buffer, SetUiBuffer] = useState("{}")
-    const [ast, SetAst] = useState({})
     const [is_dirty, SetIsDirty] = useState(false)
 
 
@@ -117,7 +112,6 @@ export function SchemaContextProvider(props: ISchemaContextProviderProps) {
         SetUiBuffer,
         data_buffer,
         SetDataBuffer,
-        ast,
         is_dirty,
         SetIsDirty
     }

@@ -7,7 +7,10 @@
         "dev": "vite",
         "build": "tsc -b && vite build",
         "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-        "preview": "vite preview"
+        "preview": "vite preview",
+        "tauri": "tauri",
+        "tauri:dev": "tauri dev",
+        "tauri:build": "tauri build"
     },
     "dependencies": {
         "@abgov/jsonforms-components": "^1.24.11",
@@ -75,6 +78,7 @@
         "zod": "^3.23.8"
     },
     "devDependencies": {
+        "@tauri-apps/cli": "^1.6.0",
         "@testing-library/react": "^16.0.0",
         "@types/dompurify": "^3.0.5",
         "@types/node": "^20.14.10",
