@@ -2,7 +2,7 @@ import { useContext } from "react"
 import { useTheme } from "@/components/contexts/ThemeProvider.tsx"
 import { SchemaDesignerContext } from "@/components/contexts/SchemaContextProvider.tsx"
 import Editor from "@monaco-editor/react"
-import {suggestions} from "@/lib/suggestions.ts";
+import {AutoCompleteSuggestions} from "@/lib/AutoCompleteSuggestions.ts";
 
 export function UiSchemaEditor() {
     const { ui_buffer, SetUiBuffer, SetIsDirty } = useContext(SchemaDesignerContext)
@@ -15,15 +15,35 @@ export function UiSchemaEditor() {
         SetUiBuffer(source)
     }
 
-    function OnMount( editor: any, monaco: any) {
-        monaco.languages.registerCompletionItemProvider('json', {
-            provideCompletionItems: () => {
-                return {
-                    suggestions: suggestions
+
+    function OnMount(_: any, monaco: any) {
+
+        monaco.languages.registerCompletionItemProvider("json", {
+            provideCompletionItems: function (model: any, position: any) {
+                // find out if we are completing a property in the 'dependencies' object.
+                const textUntilPosition = model.getValueInRange({
+                    startLineNumber: 1,
+                    startColumn: 1,
+                    endLineNumber: position.lineNumber,
+                    endColumn: position.column,
+                });
+                const match = textUntilPosition.match(/.*/);
+                if (!match) {
+                    return { suggestions: [] };
+                }
+                const word = model.getWordUntilPosition(position);
+                const range = {
+                    startLineNumber: position.lineNumber,
+                    endLineNumber: position.lineNumber,
+                    startColumn: word.startColumn,
+                    endColumn: word.endColumn,
                 };
-            }
+                return {
+                    suggestions: AutoCompleteSuggestions(range),
+                };
+            },
         });
-        console.log(editor)
+
 
     }
 

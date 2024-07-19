@@ -2,7 +2,7 @@ import { useContext } from "react"
 import { useTheme } from "@/components/contexts/ThemeProvider.tsx"
 import { SchemaDesignerContext } from "@/components/contexts/SchemaContextProvider.tsx"
 import Editor from "@monaco-editor/react"
-import {suggestions} from "@/lib/suggestions"
+import {AutoCompleteSuggestions} from "@/lib/AutoCompleteSuggestions.ts"
 
 export function DataSchemaEditor() {
     const { data_buffer, SetDataBuffer, SetIsDirty } = useContext(SchemaDesignerContext)
@@ -21,15 +21,18 @@ export function DataSchemaEditor() {
 
 
     function OnMount( editor: any, monaco: any) {
+        monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
+            comments: "ignore",
+            trailingCommas:"ignore",
+        })
+
         monaco.languages.registerCompletionItemProvider('json', {
             provideCompletionItems: () => {
                 return {
-                    suggestions: suggestions
+                    suggestions: AutoCompleteSuggestions
                 };
             }
         });
-
-        editor.trigger('keyboard', 'editor.action.triggerSuggest', {});
 
     }
 
@@ -40,6 +43,7 @@ export function DataSchemaEditor() {
                 value={data_buffer}
                 height="95vh"
                 width="100vw"
+                language="json"
                 defaultLanguage="json"
                 options={{
                     minimap: { enabled: false },
@@ -52,7 +56,13 @@ export function DataSchemaEditor() {
                     formatOnType: true,
                     formatOnPaste: true,
                     dragAndDrop: true,
-                    theme: theme.theme == "dark" ? "vs-dark" : "vs-light"
+                    theme: theme.theme == "dark" ? "vs-dark" : "vs-light",
+                    quickSuggestions: {
+                        other: true,
+                        comments: true,
+                        strings: true,
+                    }
+
                 }}
                 onChange={OnChange}
                 onMount={OnMount}
