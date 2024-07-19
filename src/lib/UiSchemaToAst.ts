@@ -1,4 +1,4 @@
-import { AstEntry } from "@/types/AstEntry.tsx"
+import {AstEntry} from "@/lib/AstEntry.tsx";
 
 function ParseEntry(entry: any): AstEntry {
     const ast_entry: AstEntry = {

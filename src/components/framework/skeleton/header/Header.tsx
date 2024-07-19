@@ -1,7 +1,6 @@
 import { ThemeToggle } from "@/components/framework/skeleton/header/ThemeToggle"
 import { MainMenu } from "@/components/framework/skeleton/header/MainMenu.tsx"
 import { ToggleButton } from "@/components/framework/ToggleButton.tsx"
-import { BiSolidPaintRoll } from "react-icons/bi"
 import { VscOpenPreview, VscSaveAll } from "react-icons/vsc"
 import { useSchema } from "@/components/contexts/SchemaContextProvider.tsx"
 import { AiOutlineFileZip } from "react-icons/ai"
@@ -65,15 +64,6 @@ export function Header(props: IHeaderProps) {
             </div>
             <div className="text-2xl flex flex-row gap-6">
                 <div className="flex flex-row gap-6">
-                    <ToggleButton
-                        is_active={props.show_canvas}
-                        icon={<BiSolidPaintRoll />}
-                        view="canvas"
-                        toggleView={props.toggleView}
-                    >
-                        Canvas
-                    </ToggleButton>
-
                     <ToggleButton
                         is_active={props.show_data_schema}
                         icon={<AiOutlineFileZip />}

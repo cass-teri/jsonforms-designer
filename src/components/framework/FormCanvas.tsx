@@ -6,7 +6,6 @@ import { GetComponentForSchemaName } from "@/lib/GetComponentForSchemaName"
 import { useSchema } from "@/components/contexts/SchemaContextProvider"
 import { DataSchemaToModel } from "@/lib/DataSchemaToModel"
 import { UiSchemaToAst } from "@/lib/UiSchemaToAst"
-import { BuildDragAndDropTree } from "@/components/framework/BuildDragAndDropTree"
 import { useStatusMessage } from "@/components/contexts/StatusMessageProvider.tsx"
 
 export default function FormCanvas() {
@@ -15,7 +14,7 @@ export default function FormCanvas() {
     const { SetStatusMessage } = useStatusMessage()
     const bg_color = theme === "dark" ? "bg-neutral-800" : "bg-white"
     const component_color = theme === "dark" ? "bg-accent" : "bg-white"
-    const [data_model, SetDataModel] = useState<object | null>(null)
+    //const [data_model, SetDataModel] = useState<object | null>(null)
 
     const [children, SetChildren] = useState<ReactNode[]>([])
 
@@ -25,7 +24,9 @@ export default function FormCanvas() {
             try {
                 const model = DataSchemaToModel(data_buffer)
                 const ast = UiSchemaToAst(ui_buffer)
-                const react_dnd_base = BuildDragAndDropTree(model, ast)
+                //const react_dnd_base = BuildDragAndDropTree(model, ast)
+                console.log(model)
+                console.log(ast)
                 status = ""
                 SetStatusMessage({ message: status, type: "success" })
             } catch (e) {
@@ -40,7 +41,12 @@ export default function FormCanvas() {
             const type = typeof component
             console.log(`Component type: ${type}`)
 
-            SetChildren((prev) => [...prev, component])
+            if (type === "function") {
+                const component = <div className="h-12 w-full border p-4">{JSON.stringify(schema)}</div>
+                SetChildren((prev) => [...prev, component])
+                return
+            }
+            //SetChildren((prev) => [...prev, component])
         } else {
             const component = <div className="h-12 w-full border p-4">{JSON.stringify(schema)}</div>
             SetChildren((prev) => [...prev, component])

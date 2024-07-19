@@ -1,9 +1,9 @@
 import { UiSchemaOptions } from "@/types/UiSchemaOptions.ts"
 
-export type AstEntry = {
+export type UiAstEntry = {
     type: string
     label?: string | null
-    elements?: AstEntry[] | null
+    elements?: UiAstEntry[] | null
     scope?: string | null
     suggestion?: string[] | null
     options?: UiSchemaOptions | null

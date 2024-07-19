@@ -7,8 +7,8 @@ import { ReactNode } from "react"
 export abstract class DisplayComponent implements IDisplay, INode {
     id: string
     parent: IContainer | null
-    properties: IProperty[]
-    position: number
+    properties: IProperty[] = []
+    position: number = -1
 
     constructor(id: string, parent: IContainer | null) {
         this.id = id

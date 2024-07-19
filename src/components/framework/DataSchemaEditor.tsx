@@ -2,6 +2,7 @@ import { useContext } from "react"
 import { useTheme } from "@/components/contexts/ThemeProvider.tsx"
 import { SchemaDesignerContext } from "@/components/contexts/SchemaContextProvider.tsx"
 import Editor from "@monaco-editor/react"
+import {suggestions} from "@/lib/suggestions"
 
 export function DataSchemaEditor() {
     const { data_buffer, SetDataBuffer, SetIsDirty } = useContext(SchemaDesignerContext)
@@ -16,6 +17,20 @@ export function DataSchemaEditor() {
     async function OnChange(source: any) {
         SetIsDirty(true)
         SetDataBuffer(source)
+    }
+
+
+    function OnMount( editor: any, monaco: any) {
+        monaco.languages.registerCompletionItemProvider('json', {
+            provideCompletionItems: () => {
+                return {
+                    suggestions: suggestions
+                };
+            }
+        });
+
+        editor.trigger('keyboard', 'editor.action.triggerSuggest', {});
+
     }
 
     //Clean this up, use push to extend the extensions array with vim instead of using a ternary
@@ -40,6 +55,7 @@ export function DataSchemaEditor() {
                     theme: theme.theme == "dark" ? "vs-dark" : "vs-light"
                 }}
                 onChange={OnChange}
+                onMount={OnMount}
             />
         </div>
     )

@@ -1,6 +1,4 @@
-import { ComponentPanel } from "@/components/framework/ComponentPanel"
 import { PropertiesPanel } from "@/components/framework/PropertiesPanel"
-import FormCanvas from "@/components/framework/FormCanvas"
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels"
 import { UiSchemaEditor } from "@/components/framework/UiSchemaEditor"
 import { DataSchemaEditor } from "@/components/framework/DataSchemaEditor"
@@ -13,7 +11,7 @@ function App() {
     const [show_canvas, SetShowCanvas] = useState(false)
     const [show_ui_schema, SetShowSchemaUi] = useState(true)
     const [show_data_schema, SetShowSchemaData] = useState(true)
-    const [show_preview, SetShowPreview] = useState(false)
+    const [show_preview, SetShowPreview] = useState(true)
 
     function ToggleView(view: string) {
         if (view === "canvas") {
@@ -37,12 +35,14 @@ function App() {
                 show_data_schema={show_data_schema}
             />
             <main className="pt-14 h-[calc(100vh-2rem)] ">
-                <ComponentPanel></ComponentPanel>
+{/*                <ComponentPanel></ComponentPanel>*/}
                 <PanelGroup direction="horizontal" className="bg-white">
+{/*
                     <Panel defaultSize={25} hidden={!show_canvas}>
                         <FormCanvas></FormCanvas>
                     </Panel>
                     <PanelResizeHandle className={`border-2 border-border ${ show_canvas ? "" : "hidden"}`} />
+*/}
                     <Panel defaultSize={25} hidden={!show_data_schema}>
                         <DataSchemaEditor></DataSchemaEditor>
                     </Panel>
