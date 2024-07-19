@@ -57,7 +57,7 @@ export function UiSchemaEditor() {
                 width="100vw"
                 defaultLanguage="json"
                 options={{
-                    minimap: { enabled: false },
+                    minimap: { enabled: true },
                     wordWrap: "on",
                     lineNumbers: "on",
                     fontSize: 16,
@@ -67,7 +67,11 @@ export function UiSchemaEditor() {
                     formatOnType: true,
                     formatOnPaste: true,
                     dragAndDrop: true,
-                    theme: theme.theme == "dark" ? "vs-dark" : "vs-light"
+                    theme: theme.theme == "dark" ? "vs-dark" : "vs-light",
+                    guides: {
+                        bracketPairs: true,
+                        highlightActiveIndentation:true
+                    },
                 }}
                 onChange={OnChange}
                 onMount={OnMount}

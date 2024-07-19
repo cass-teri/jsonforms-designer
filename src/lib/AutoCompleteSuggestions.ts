@@ -124,7 +124,7 @@ export function AutoCompleteSuggestions(range: monaco.IRange) {
             insertText: [
                 "{",
                 "    \"type\":\"Control\",",
-                "    \"scope\":\"#/properties/${1:Scope}\"",
+                "    \"scope\":\"#/properties/${1:Scope}\",",
                 "    \"label\":\"${2:Scope}\"",
                 "}"
             ].join('\n'),

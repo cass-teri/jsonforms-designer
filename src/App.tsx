@@ -1,4 +1,3 @@
-import { PropertiesPanel } from "@/components/framework/PropertiesPanel"
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels"
 import { UiSchemaEditor } from "@/components/framework/UiSchemaEditor"
 import { DataSchemaEditor } from "@/components/framework/DataSchemaEditor"
@@ -43,19 +42,19 @@ function App() {
                     </Panel>
                     <PanelResizeHandle className={`border-2 border-border ${ show_canvas ? "" : "hidden"}`} />
 */}
-                    <Panel defaultSize={25} hidden={!show_data_schema}>
+                    <Panel defaultSize={33} hidden={!show_data_schema}>
                         <DataSchemaEditor></DataSchemaEditor>
                     </Panel>
                     <PanelResizeHandle className={`border-2 border-border ${ show_data_schema?"":"hidden"}`} />
-                    <Panel defaultSize={25} hidden={!show_ui_schema}>
+                    <Panel defaultSize={33} hidden={!show_ui_schema}>
                         <UiSchemaEditor></UiSchemaEditor>
                     </Panel>
                     <PanelResizeHandle className={`border-2 border-border ${ show_ui_schema?"":"hidden"}`} />
-                    <Panel defaultSize={25} hidden={!show_preview}>
+                    <Panel defaultSize={34} hidden={!show_preview}>
                         <PreviewPanel></PreviewPanel>
                     </Panel>
                 </PanelGroup>
-                <PropertiesPanel></PropertiesPanel>
+{/*                <PropertiesPanel></PropertiesPanel>*/}
             </main>
             <Footer />
         </>

@@ -20,7 +20,7 @@ export function DataSchemaEditor() {
     }
 
 
-    function OnMount( editor: any, monaco: any) {
+    function OnMount( _: any, monaco: any) {
         monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
             comments: "ignore",
             trailingCommas:"ignore",

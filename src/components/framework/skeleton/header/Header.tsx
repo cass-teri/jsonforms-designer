@@ -5,6 +5,7 @@ import { VscOpenPreview, VscSaveAll } from "react-icons/vsc"
 import { useSchema } from "@/components/contexts/SchemaContextProvider.tsx"
 import { AiOutlineFileZip } from "react-icons/ai"
 import { LuFileJson } from "react-icons/lu"
+import {useStatusMessage} from "@/components/contexts/StatusMessageProvider.tsx";
 
 interface IHeaderProps {
     toggleView: (view: string) => void
@@ -16,14 +17,19 @@ interface IHeaderProps {
 
 export function Header(props: IHeaderProps) {
     const { SetUiSchema, ui_buffer, data_buffer, SetIsDirty, SetDataSchema } = useSchema()
-
+    const { SetStatusMessage} = useStatusMessage()
     function SaveAllFiles() {
         try {
-            SaveDataFile()
-            SaveUiFile()
-        } catch (e) {
-            console.error(e)
+            const data_success = SaveDataFile()
+            const ui_success = SaveUiFile()
+            if (data_success && ui_success) {
+                SetStatusMessage({message: "Files saved successfully", type: "success"})
+            }
+        } catch (e:any) {
+            console.log(e.message)
+            SetStatusMessage({message: e.message, type: "error"})
         }
+
     }
 
     function SaveDataFile() {
@@ -32,8 +38,11 @@ export function Header(props: IHeaderProps) {
             const schema_string = JSON.stringify(buffer_parsed, null, 4)
             SetDataSchema(schema_string)
             SetIsDirty(false)
-        } catch (e) {
-            console.error(e)
+            return true
+        } catch (e: any) {
+            console.error(e.message)
+            SetStatusMessage({ message: `DataSchema: ${e.message}`, type: "error" })
+            return false
         }
     }
 
@@ -43,8 +52,11 @@ export function Header(props: IHeaderProps) {
             const schema_string = JSON.stringify(buffer_parsed, null, 4)
             SetUiSchema(schema_string)
             SetIsDirty(false)
-        } catch (e) {
-            console.error(e)
+            return true
+        } catch (e: any) {
+            console.error(e.message)
+            SetStatusMessage({ message: `UISchema: ${e.message}`, type: "error" })
+            return false
         }
     }
 
