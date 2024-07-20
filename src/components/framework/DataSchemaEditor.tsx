@@ -2,38 +2,36 @@ import { useContext } from "react"
 import { useTheme } from "@/components/contexts/ThemeProvider.tsx"
 import { SchemaDesignerContext } from "@/components/contexts/SchemaContextProvider.tsx"
 import Editor from "@monaco-editor/react"
-import {AutoCompleteSuggestions} from "@/lib/AutoCompleteSuggestions.ts"
+import { AutoCompleteSuggestions } from "@/lib/AutoCompleteSuggestions.ts"
 
 export function DataSchemaEditor() {
-    const { data_buffer, SetDataBuffer, SetIsDirty } = useContext(SchemaDesignerContext)
+    const { data_buffer, SetDataBuffer, SetIsDataDirty } = useContext(SchemaDesignerContext)
     const theme = useTheme()
 
     function OnDrop(e: any) {
         e.preventDefault()
-        SetIsDirty(true)
+        SetIsDataDirty(true)
         SetDataBuffer("")
     }
 
     async function OnChange(source: any) {
-        SetIsDirty(true)
+        SetIsDataDirty(true)
         SetDataBuffer(source)
     }
 
-
-    function OnMount( _: any, monaco: any) {
+    function OnMount(_: any, monaco: any) {
         monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
             comments: "ignore",
-            trailingCommas:"ignore",
+            trailingCommas: "ignore"
         })
 
-        monaco.languages.registerCompletionItemProvider('json', {
+        monaco.languages.registerCompletionItemProvider("json", {
             provideCompletionItems: () => {
                 return {
                     suggestions: AutoCompleteSuggestions
-                };
+                }
             }
-        });
-
+        })
     }
 
     //Clean this up, use push to extend the extensions array with vim instead of using a ternary
@@ -60,9 +58,8 @@ export function DataSchemaEditor() {
                     quickSuggestions: {
                         other: true,
                         comments: true,
-                        strings: true,
+                        strings: true
                     }
-
                 }}
                 onChange={OnChange}
                 onMount={OnMount}

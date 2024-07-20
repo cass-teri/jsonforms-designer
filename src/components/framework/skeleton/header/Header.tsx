@@ -1,11 +1,10 @@
 import { ThemeToggle } from "@/components/framework/skeleton/header/ThemeToggle"
-import { MainMenu } from "@/components/framework/skeleton/header/MainMenu.tsx"
 import { ToggleButton } from "@/components/framework/ToggleButton.tsx"
 import { VscOpenPreview, VscSaveAll } from "react-icons/vsc"
 import { useSchema } from "@/components/contexts/SchemaContextProvider.tsx"
 import { AiOutlineFileZip } from "react-icons/ai"
 import { LuFileJson } from "react-icons/lu"
-import {useStatusMessage} from "@/components/contexts/StatusMessageProvider.tsx";
+import { useStatusMessage } from "@/components/contexts/StatusMessageProvider.tsx"
 
 interface IHeaderProps {
     toggleView: (view: string) => void
@@ -16,20 +15,19 @@ interface IHeaderProps {
 }
 
 export function Header(props: IHeaderProps) {
-    const { SetUiSchema, ui_buffer, data_buffer, SetIsDirty, SetDataSchema } = useSchema()
-    const { SetStatusMessage} = useStatusMessage()
+    const { SetUiSchema, ui_buffer, data_buffer, SetIsUiDirty, SetIsDataDirty, SetDataSchema } = useSchema()
+    const { SetStatusMessage } = useStatusMessage()
     function SaveAllFiles() {
         try {
             const data_success = SaveDataFile()
             const ui_success = SaveUiFile()
             if (data_success && ui_success) {
-                SetStatusMessage({message: "Files saved successfully", type: "success"})
+                SetStatusMessage({ message: "Files saved successfully", type: "success" })
             }
-        } catch (e:any) {
+        } catch (e: any) {
             console.log(e.message)
-            SetStatusMessage({message: e.message, type: "error"})
+            SetStatusMessage({ message: e.message, type: "error" })
         }
-
     }
 
     function SaveDataFile() {
@@ -37,7 +35,7 @@ export function Header(props: IHeaderProps) {
             const buffer_parsed = JSON.parse(data_buffer)
             const schema_string = JSON.stringify(buffer_parsed, null, 4)
             SetDataSchema(schema_string)
-            SetIsDirty(false)
+            SetIsDataDirty(false)
             return true
         } catch (e: any) {
             console.error(e.message)
@@ -51,7 +49,7 @@ export function Header(props: IHeaderProps) {
             const buffer_parsed = JSON.parse(ui_buffer)
             const schema_string = JSON.stringify(buffer_parsed, null, 4)
             SetUiSchema(schema_string)
-            SetIsDirty(false)
+            SetIsUiDirty(false)
             return true
         } catch (e: any) {
             console.error(e.message)
@@ -63,8 +61,7 @@ export function Header(props: IHeaderProps) {
     return (
         <div className="fixed flex flex-row bg-accent text-accent-foreground left-0 top-0 right-0 h-14 items-center justify-between shadow">
             <div className="flex flex-row items-center justify-center pl-4">
-                <MainMenu></MainMenu>
-                <div className="flex flex-row pl-4">
+                <div className="flex flex-row">
                     <button
                         onClick={SaveAllFiles}
                         className="hover:bg-primary hover:text-primary-foreground w-10 h-10 flex flex-col justify-center items-center rounded"
@@ -104,7 +101,7 @@ export function Header(props: IHeaderProps) {
             </div>
 
             <div className="flex flex-row items-center justify-center">
-                <ThemeToggle className="hover:bg-primary hover:text-primary-foreground w-10 h-10 flex flex-col justify-center items-center rounded" />
+                <ThemeToggle className="hover:bg-primary hover:text-primary-foreground w-10 h-10 flex flex-col justify-center items-center rounded pr-4" />
             </div>
         </div>
     )

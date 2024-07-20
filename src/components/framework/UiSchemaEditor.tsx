@@ -5,13 +5,13 @@ import Editor from "@monaco-editor/react"
 import { AutoCompleteSuggestions } from "@/lib/AutoCompleteSuggestions.ts"
 
 export function UiSchemaEditor() {
-    const { ui_buffer, SetUiBuffer, SetIsDirty } = useContext(SchemaDesignerContext)
+    const { ui_buffer, SetUiBuffer, SetIsUiDirty } = useContext(SchemaDesignerContext)
     const theme = useTheme()
 
     const code_theme = theme.theme === "dark" ? "vs-dark" : "vs-light"
 
     async function OnChange(source: any) {
-        SetIsDirty(true)
+        SetIsUiDirty(true)
         SetUiBuffer(source)
     }
 

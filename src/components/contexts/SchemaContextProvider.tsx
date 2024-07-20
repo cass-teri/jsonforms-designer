@@ -1,4 +1,5 @@
-import {createContext, ReactNode, useContext, useEffect, useState} from "react"
+import { createContext, ReactNode, useContext, useEffect, useState } from "react"
+
 //import { GenerateAst } from "@/components/contexts/GenerateAst.tsx"
 
 interface ISchemaContextProviderProps {
@@ -6,20 +7,35 @@ interface ISchemaContextProviderProps {
 }
 
 type SchemaContextType = {
-    ui_schema: string
-    SetUiSchema: (schema: string) => void
+    project_name: string
+    SetProjectName: (name: string) => void
+
+    project_path: string
+    SetProjectPath: (path: string) => void
 
     data_schema: string
     SetDataSchema: (schema: string) => void
 
-    ui_buffer: string
-    SetUiBuffer: (buffer: string) => void
+    data_schema_path: string
+    SetDataSchemaPath: (path: string) => void
 
     data_buffer: string
     SetDataBuffer: (buffer: string) => void
 
-    is_dirty: boolean
-    SetIsDirty: (is_dirty: boolean) => void
+    ui_schema: string
+    SetUiSchema: (schema: string) => void
+
+    ui_schema_path: string
+    SetUiSchemaPath: (path: string) => void
+
+    ui_buffer: string
+    SetUiBuffer: (buffer: string) => void
+
+    is_data_dirty: boolean
+    SetIsDataDirty: (is_dirty: boolean) => void
+
+    is_ui_dirty: boolean
+    SetIsUiDirty: (is_dirty: boolean) => void
 }
 
 const initialSchemaContext: SchemaContextType = {
@@ -29,14 +45,29 @@ const initialSchemaContext: SchemaContextType = {
     data_schema: "",
     SetDataSchema: (_: string) => {},
 
+    data_schema_path: "",
+    SetDataSchemaPath: (_: string) => {},
+
+    ui_schema_path: "",
+    SetUiSchemaPath: (_: string) => {},
+
     ui_buffer: "",
     SetUiBuffer: (_: string) => {},
 
     data_buffer: "",
     SetDataBuffer: (_: string) => {},
 
-    is_dirty: false,
-    SetIsDirty: (_: boolean) => {}
+    is_data_dirty: false,
+    SetIsDataDirty: (_: boolean) => {},
+
+    is_ui_dirty: false,
+    SetIsUiDirty: (_: boolean) => {},
+
+    project_name: "",
+    SetProjectName: (_: string) => {},
+
+    project_path: "",
+    SetProjectPath: (_: string) => {}
 }
 
 export const SchemaDesignerContext = createContext(initialSchemaContext)
@@ -46,8 +77,13 @@ export function SchemaContextProvider(props: ISchemaContextProviderProps) {
     const [data_schema, SetDataSchemaInner] = useState("{}")
     const [data_buffer, SetDataBuffer] = useState("{}")
     const [ui_buffer, SetUiBuffer] = useState("{}")
-    const [is_dirty, SetIsDirty] = useState(false)
+    const [project_name, SetProjectName] = useState("")
+    const [project_path, SetProjectPath] = useState("")
+    const [data_schema_path, SetDataSchemaPath] = useState("")
+    const [ui_schema_path, SetUiSchemaPath] = useState("")
 
+    const [is_data_dirty, SetIsDataDirty] = useState(false)
+    const [is_ui_dirty, SetIsUiDirty] = useState(false)
 
     useEffect(() => {
         const data_schema = localStorage.getItem("data_schema")
@@ -63,7 +99,6 @@ export function SchemaContextProvider(props: ISchemaContextProviderProps) {
             SetUiSchema(ui_schema)
         }
     }, [])
-
 
     function SetDataSchema(newDataSchema: string) {
         if (newDataSchema === "") {
@@ -100,7 +135,6 @@ export function SchemaContextProvider(props: ISchemaContextProviderProps) {
             console.error(e)
             return
         }
-
     }
 
     const schemaContext = {
@@ -112,8 +146,18 @@ export function SchemaContextProvider(props: ISchemaContextProviderProps) {
         SetUiBuffer,
         data_buffer,
         SetDataBuffer,
-        is_dirty,
-        SetIsDirty
+        is_data_dirty,
+        SetIsDataDirty,
+        is_ui_dirty,
+        SetIsUiDirty,
+        project_name,
+        SetProjectName,
+        project_path,
+        SetProjectPath,
+        data_schema_path,
+        SetDataSchemaPath,
+        ui_schema_path,
+        SetUiSchemaPath
     }
 
     return <SchemaDesignerContext.Provider value={schemaContext}>{props.children}</SchemaDesignerContext.Provider>

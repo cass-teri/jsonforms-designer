@@ -1,7 +1,8 @@
 export interface IOpenFileProps {
     SetBuffer: (buffer: string) => void
     SetSchema: (schema: string) => void
-    SetIsDirty: (is_dirty: boolean) => void
+    SetIsDataDirty: (is_data_dirty: boolean) => void
+    SetIsUiDirty: (is_ui_dirty: boolean) => void
 }
 
 export function OpenFile(props: IOpenFileProps) {
@@ -30,7 +31,8 @@ export function OpenFile(props: IOpenFileProps) {
             }
             props.SetBuffer(contents)
             props.SetSchema(contents)
-            props.SetIsDirty(true)
+            props.SetIsDataDirty(true)
+            props.SetIsUiDirty(true)
         }
         reader.readAsText(file)
     }
