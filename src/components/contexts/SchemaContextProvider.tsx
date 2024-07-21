@@ -40,34 +40,34 @@ type SchemaContextType = {
 
 const initialSchemaContext: SchemaContextType = {
     ui_schema: "",
-    SetUiSchema: (_: string) => {},
+    SetUiSchema: (_: string) => _,
 
     data_schema: "",
-    SetDataSchema: (_: string) => {},
+    SetDataSchema: (_: string) => _,
 
     data_schema_path: "",
-    SetDataSchemaPath: (_: string) => {},
+    SetDataSchemaPath: (_: string) => _,
 
     ui_schema_path: "",
-    SetUiSchemaPath: (_: string) => {},
+    SetUiSchemaPath: (_: string) => _,
 
     ui_buffer: "",
-    SetUiBuffer: (_: string) => {},
+    SetUiBuffer: (_: string) => _,
 
     data_buffer: "",
-    SetDataBuffer: (_: string) => {},
+    SetDataBuffer: (_: string) => _,
 
     is_data_dirty: false,
-    SetIsDataDirty: (_: boolean) => {},
+    SetIsDataDirty: (_: boolean) => _,
 
     is_ui_dirty: false,
-    SetIsUiDirty: (_: boolean) => {},
+    SetIsUiDirty: (_: boolean) => _,
 
     project_name: "",
-    SetProjectName: (_: string) => {},
+    SetProjectName: (_: string) => _,
 
     project_path: "",
-    SetProjectPath: (_: string) => {}
+    SetProjectPath: (_: string) => _
 }
 
 export const SchemaDesignerContext = createContext(initialSchemaContext)
