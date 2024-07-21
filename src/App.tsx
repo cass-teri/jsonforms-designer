@@ -117,19 +117,19 @@ export function useAppWindowListeners() {
         })
 
         const new_data_schema = appWindow.listen("new_data_schema", async () => {
-            await NewDataSchema()
+            await NewDataSchema(SetDataBuffer, SetIsDataDirty)
         })
 
         const new_ui_schema = appWindow.listen("new_ui_schema", async () => {
-            await NewUiSchema()
+            await NewUiSchema(SetUiBuffer, SetIsUiDirty)
         })
 
         const open_data_schema = appWindow.listen("open_data_schema", async () => {
-            await OpenDataFile(data_schema_path, SetDataBuffer, SetIsDataDirty)
+            await OpenDataFile(SetDataBuffer, SetIsDataDirty, SetDataSchemaPath)
         })
 
         const open_ui_schema = appWindow.listen("open_ui_schema", async () => {
-            await OpenUiFile(ui_schema_path, SetUiBuffer, SetIsUiDirty)
+            await OpenUiFile(SetUiBuffer, SetIsUiDirty, SetUiSchemaPath)
         })
 
         const save_data_schema = appWindow.listen("save_data_schema", async () => {

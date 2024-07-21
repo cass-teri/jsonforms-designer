@@ -8,8 +8,8 @@ export async function OpenProject(
     SetIsUiDirty: (is_ui_dirty: boolean) => void,
     SetProjectName: (name: string) => void,
     SetProjectPath: (path: string) => void,
-    SetDataBufferPath: (path: string) => void,
-    SetUiBufferPath: (path: string) => void
+    SetDataSchemaPath: (path: string) => void,
+    SetUiSchemaPath: (path: string) => void
 ) {
     try {
         const selected = await open({
@@ -26,14 +26,16 @@ export async function OpenProject(
                 files.forEach((file) => {
                     if (file.name?.endsWith("data_schema.json")) {
                         readTextFile(file.path).then((data) => {
-                            SetDataBufferPath(file.path)
+                            console.log(file.name)
+                            SetDataSchemaPath(file.path)
                             SetDataBuffer(data)
                             SetIsDataDirty(true)
                         })
                     }
                     if (file.name?.endsWith("ui_schema.json")) {
                         readTextFile(file.path).then((data) => {
-                            SetUiBufferPath(file.path)
+                            console.log(file.name)
+                            SetUiSchemaPath(file.path)
                             SetUiBuffer(data)
                             SetIsUiDirty(true)
                         })
@@ -42,7 +44,7 @@ export async function OpenProject(
             })
         }
     } catch (e: any) {
-        console.error(e)
+        console.error(`err: ${e}`)
         return e.message
     }
 }

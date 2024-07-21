@@ -13,6 +13,9 @@ export async function SaveAll(
         const data_success = await SaveDataFile(data_schema, data_schema_path, SetIsDataDirty)
         const ui_success = await SaveUiFile(ui_schema, ui_schema_path, SetIsUiDirty)
 
+        console.log("data_success", data_success)
+        console.log("ui_success", ui_success)
+
         if (data_success && ui_success) {
             console.log("Files saved successfully")
             SetIsDataDirty(false)
