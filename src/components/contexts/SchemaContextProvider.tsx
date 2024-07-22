@@ -87,9 +87,6 @@ export function SchemaContextProvider(props: ISchemaContextProviderProps) {
     const [is_ui_dirty, SetIsUiDirty] = useState(false)
 
     useEffect(() => {
-        const data_schema = localStorage.getItem("data_schema")
-        const ui_schema = localStorage.getItem("ui_schema")
-
         if (data_schema) {
             SetDataBuffer(data_schema)
             SetDataSchema(data_schema)
@@ -113,12 +110,10 @@ export function SchemaContextProvider(props: ISchemaContextProviderProps) {
 
     function SetDataSchema(newDataSchema: string) {
         if (newDataSchema === "") {
-            localStorage.setItem("data_schema", newDataSchema)
             SetDataSchemaInner("{}")
             return
         }
 
-        localStorage.setItem("data_schema", newDataSchema)
         SetDataSchemaInner(newDataSchema)
 
         try {
@@ -136,7 +131,6 @@ export function SchemaContextProvider(props: ISchemaContextProviderProps) {
             return
         }
 
-        localStorage.setItem("ui_schema", newUiSchema)
         SetUiSchemaInner(newUiSchema)
 
         try {

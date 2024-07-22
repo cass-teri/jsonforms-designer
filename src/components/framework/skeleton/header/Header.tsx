@@ -5,6 +5,8 @@ import { useSchema } from "@/components/contexts/SchemaContextProvider.tsx"
 import { AiOutlineFileZip } from "react-icons/ai"
 import { LuFileJson } from "react-icons/lu"
 import { useStatusMessage } from "@/components/contexts/StatusMessageProvider.tsx"
+import {save} from "@tauri-apps/api/dialog";
+import {writeTextFile} from "@tauri-apps/api/fs";
 
 interface IHeaderProps {
     toggleView: (view: string) => void
@@ -15,47 +17,69 @@ interface IHeaderProps {
 }
 
 export function Header(props: IHeaderProps) {
-    const { SetUiSchema, ui_buffer, data_buffer, SetIsUiDirty, SetIsDataDirty, SetDataSchema } = useSchema()
+    const { SetUiSchema, ui_buffer, data_buffer, SetIsUiDirty, SetIsDataDirty, SetDataSchema, data_schema_path, ui_schema_path , SetDataSchemaPath, SetUiSchemaPath} = useSchema()
     const { SetStatusMessage } = useStatusMessage()
-    function SaveAllFiles() {
+
+    async function SaveAllFiles() {
+
+        // Save Data Schema
         try {
-            const data_success = SaveDataFile()
-            const ui_success = SaveUiFile()
-            if (data_success && ui_success) {
-                SetStatusMessage({ message: "Files saved successfully", type: "success" })
+            let path: string | null = data_schema_path
+            if (path == "") {
+                path = await save({
+                    filters: [
+                        {
+                            name: "data_schema",
+                            extensions: ["json"]
+                        }
+                    ]
+                })
             }
-        } catch (e: any) {
-            console.log(e.message)
-            SetStatusMessage({ message: e.message, type: "error" })
-        }
-    }
 
-    function SaveDataFile() {
-        try {
-            const buffer_parsed = JSON.parse(data_buffer)
-            const schema_string = JSON.stringify(buffer_parsed, null, 4)
-            SetDataSchema(schema_string)
+            if (path == null) {
+                console.log("No path selected")
+                return "No path selected"
+            }
+
+            await writeTextFile(path, data_buffer)
             SetIsDataDirty(false)
-            return true
+            SetDataSchema(data_buffer)
+            SetDataSchemaPath(path)
         } catch (e: any) {
-            console.error(e.message)
-            SetStatusMessage({ message: `DataSchema: ${e.message}`, type: "error" })
-            return false
+            SetStatusMessage({ message: e.message, type: "error" })
+            return e.message
         }
-    }
 
-    function SaveUiFile() {
+        // Save UI Schema
         try {
-            const buffer_parsed = JSON.parse(ui_buffer)
-            const schema_string = JSON.stringify(buffer_parsed, null, 4)
-            SetUiSchema(schema_string)
+            let path: string | null = ui_schema_path
+            if (path == "") {
+                path = await save({
+                    filters: [
+                        {
+                            name: "ui_schema",
+                            extensions: ["json"]
+                        }
+                    ]
+                })
+            }
+
+            if (path == null) {
+                console.log("No path selected")
+                return "No path selected"
+            }
+
+            await writeTextFile(path, ui_buffer)
             SetIsUiDirty(false)
-            return true
+            SetUiSchema(ui_buffer)
+            SetUiSchemaPath(path)
         } catch (e: any) {
-            console.error(e.message)
-            SetStatusMessage({ message: `UISchema: ${e.message}`, type: "error" })
-            return false
+            console.error(e)
+            SetStatusMessage({ message: e.message, type: "error" })
+            return e.message
         }
+
+        SetStatusMessage({ message: "Files saved successfully", type: "success" })
     }
 
     return (

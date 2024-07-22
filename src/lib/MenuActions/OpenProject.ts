@@ -9,7 +9,9 @@ export async function OpenProject(
     SetProjectName: (name: string) => void,
     SetProjectPath: (path: string) => void,
     SetDataSchemaPath: (path: string) => void,
-    SetUiSchemaPath: (path: string) => void
+    SetUiSchemaPath: (path: string) => void,
+    SetDataSchema: (schema: string) => void,
+    SetUiSchema: (schema: string) => void
 ) {
     try {
         const selected = await open({
@@ -30,6 +32,7 @@ export async function OpenProject(
                             SetDataSchemaPath(file.path)
                             SetDataBuffer(data)
                             SetIsDataDirty(true)
+                            SetDataSchema(data)
                         })
                     }
                     if (file.name?.endsWith("ui_schema.json")) {
@@ -38,6 +41,7 @@ export async function OpenProject(
                             SetUiSchemaPath(file.path)
                             SetUiBuffer(data)
                             SetIsUiDirty(true)
+                            SetUiSchema(data)
                         })
                     }
                 })

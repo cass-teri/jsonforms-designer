@@ -4,7 +4,8 @@ import { readTextFile } from "@tauri-apps/api/fs"
 export async function OpenDataFile(
     SetDataBuffer: (buffer: string) => void,
     SetIsDataDirty: (is_dirty: boolean) => void,
-    SetDataSchemaPath: (schema_path: string) => void
+    SetDataSchemaPath: (schema_path: string) => void,
+    SetDataScheme: (schema: string) => void
 ) {
     const dialog_result = await open({})
     if (typeof dialog_result === "string") {
@@ -12,5 +13,6 @@ export async function OpenDataFile(
         SetDataBuffer(buffer)
         SetDataSchemaPath(dialog_result)
         SetIsDataDirty(true)
+        SetDataScheme(buffer)
     }
 }

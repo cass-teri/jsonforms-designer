@@ -153,7 +153,7 @@ export function AutoCompleteSuggestions(range: monaco.IRange) {
             insertText: [
                 "{",
                 "    \"type\":\"HorizontalLayout\",",
-                "    \"elements\":[${1:Elements} ],",
+                "    \"elements\":[${1:Elements} ]",
                 "}"
             ].join('\n'),
             insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
@@ -166,7 +166,7 @@ export function AutoCompleteSuggestions(range: monaco.IRange) {
             insertText: [
                 "{",
                 "    \"type\":\"VerticalLayout\",",
-                "    \"elements\":[ ${1:Elements} ],",
+                "    \"elements\":[ ${1:Elements} ]",
                 "}"].join('\n'),
             insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
             range
@@ -178,7 +178,7 @@ export function AutoCompleteSuggestions(range: monaco.IRange) {
             insertText: [
                 "{",
                 "    \"type\":\"Group\",",
-                "    \"elements\":[ ${1:Elements} ],",
+                "    \"elements\":[ ${1:Elements} ]",
                 "}"].join('\n'),
             insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
             range

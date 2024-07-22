@@ -9,7 +9,6 @@ import { appWindow } from "@tauri-apps/api/window"
 import { useSchema } from "@/components/contexts/SchemaContextProvider.tsx"
 import { OpenProject } from "@/lib/MenuActions/OpenProject.ts"
 import { NewProject } from "@/lib/MenuActions/NewProject.ts"
-import { SaveUiFile } from "@/lib/MenuActions/SaveUiFile.ts"
 import { OpenUiFile } from "@/lib/MenuActions/OpenUiFile.ts"
 import { OpenDataFile } from "@/lib/MenuActions/OpenDataFile.ts"
 import { NewDataSchema } from "@/lib/MenuActions/NewDataSchema.ts"
@@ -32,6 +31,8 @@ function App() {
         SetUiSchemaPath,
         SetIsDataDirty,
         SetIsUiDirty,
+        SetDataSchema,
+        SetUiSchema,
         data_schema_path,
         data_buffer,
         ui_schema_path,
@@ -54,31 +55,31 @@ function App() {
                 SetProjectName,
                 SetProjectPath,
                 SetDataSchemaPath,
-                SetUiSchemaPath
+                SetUiSchemaPath,
+                SetDataSchema,
+                SetUiSchema
             )
         })
 
-        const save_project = appWindow.listen("save_project", async () => {
-            // Do save all
-        })
-
         const new_data_schema = appWindow.listen("new_data_schema", async () => {
-            await NewDataSchema(SetDataBuffer, SetIsDataDirty)
+            await NewDataSchema(SetDataBuffer, SetIsDataDirty, SetDataSchemaPath, SetDataSchema)
         })
 
         const new_ui_schema = appWindow.listen("new_ui_schema", async () => {
-            await NewUiSchema(SetUiBuffer, SetIsUiDirty)
+            await NewUiSchema(SetUiBuffer, SetIsUiDirty, SetUiSchemaPath, SetUiSchema)
         })
 
         const open_data_schema = appWindow.listen("open_data_schema", async () => {
-            await OpenDataFile(SetDataBuffer, SetIsDataDirty, SetDataSchemaPath)
+            await OpenDataFile(SetDataBuffer, SetIsDataDirty, SetDataSchemaPath, SetDataSchema)
         })
 
         const open_ui_schema = appWindow.listen("open_ui_schema", async () => {
-            await OpenUiFile(SetUiBuffer, SetIsUiDirty, SetUiSchemaPath)
+            await OpenUiFile(SetUiBuffer, SetIsUiDirty, SetUiSchemaPath, SetUiSchema)
         })
 
         const save_data_schema = appWindow.listen("save_data_schema", async () => {
+            // Save Data Schema
+            // This is inline because breaking them out to functions broke the state context
             try {
                 let path: string | null = data_schema_path
                 if (path == "") {
@@ -99,6 +100,9 @@ function App() {
 
                 await writeTextFile(path, data_buffer)
                 SetIsDataDirty(false)
+                if(path != data_schema_path) {
+                    SetDataSchemaPath(path)
+                }
             } catch (e: any) {
                 console.error(e)
                 return e.message
@@ -106,16 +110,94 @@ function App() {
         })
 
         const save_ui_schema = appWindow.listen("save_ui_schema", async () => {
-            await SaveUiFile(ui_buffer, ui_schema_path, SetIsUiDirty)
+            try {
+                let path: string | null = ui_schema_path
+                if (path == "") {
+                    path = await save({
+                        filters: [
+                            {
+                                name: "ui_schema",
+                                extensions: ["json"]
+                            }
+                        ]
+                    })
+                }
+
+                if (path == null) {
+                    console.log("No path selected")
+                    return "No path selected"
+                }
+
+                await writeTextFile(path, ui_buffer)
+                SetIsUiDirty(false)
+                if(path != ui_schema_path) {
+                    SetUiSchemaPath(path)
+                }
+            } catch (e: any) {
+                console.error(e)
+                return e.message
+            }
         })
 
         const save_all = appWindow.listen("save_all", async () => {
-            console.log("save all")
+            // Save Data Schema
+            try {
+                let path: string | null = data_schema_path
+                if (path == "") {
+                    path = await save({
+                        filters: [
+                            {
+                                name: "data_schema",
+                                extensions: ["json"]
+                            }
+                        ]
+                    })
+                }
+
+                if (path == null) {
+                    console.log("No path selected")
+                    return "No path selected"
+                }
+
+                await writeTextFile(path, data_buffer)
+                SetIsDataDirty(false)
+                SetDataSchema(data_buffer)
+            } catch (e: any) {
+                console.error(e)
+                return e.message
+            }
+
+            // Save UI Schema
+            try {
+                let path: string | null = ui_schema_path
+                if (path == "") {
+                    path = await save({
+                        filters: [
+                            {
+                                name: "ui_schema",
+                                extensions: ["json"]
+                            }
+                        ]
+                    })
+                }
+
+                if (path == null) {
+                    console.log("No path selected")
+                    return "No path selected"
+                }
+
+                await writeTextFile(path, ui_buffer)
+                SetIsUiDirty(false)
+                SetUiSchema(ui_buffer)
+            } catch (e: any) {
+                console.error(e)
+                return e.message
+            }
+
         })
 
         return () => {
             new_project.then((f) => f())
-            save_project.then((f) => f())
             open_project.then((f) => f())
             new_data_schema.then((f) => f())
             new_ui_schema.then((f) => f())
@@ -125,20 +207,7 @@ function App() {
             save_ui_schema.then((f) => f())
             save_all.then((f) => f())
         }
-    }, [
-        SetDataBuffer,
-        SetDataSchemaPath,
-        SetIsDataDirty,
-        SetIsUiDirty,
-        SetProjectName,
-        SetProjectPath,
-        SetUiBuffer,
-        SetUiSchemaPath,
-        data_buffer,
-        data_schema_path,
-        ui_buffer,
-        ui_schema_path
-    ])
+    }, [SetDataBuffer, SetDataSchema, SetDataSchemaPath, SetIsDataDirty, SetIsUiDirty, SetProjectName, SetProjectPath, SetUiBuffer, SetUiSchema, SetUiSchemaPath, data_buffer, data_schema_path, ui_buffer, ui_schema_path])
 
     function ToggleView(view: string) {
         if (view === "canvas") {
@@ -171,11 +240,12 @@ function App() {
                     <PanelResizeHandle className={`border-2 border-border ${ show_canvas ? "" : "hidden"}`} />
 */}
                     <Panel defaultSize={33} hidden={!show_data_schema}>
-                        <div className="h-10 w-full bg-gray-200 px-4 py-2">{data_schema_path}</div>
+                        <div className="h-8 w-full bg-gray-200 px-4 py-1 overflow-hidden text-nowrap border border-neutral-400 dark:bg-neutral-700">{data_schema_path}</div>
                         <DataSchemaEditor></DataSchemaEditor>
                     </Panel>
                     <PanelResizeHandle className={`border-2 border-border ${show_data_schema ? "" : "hidden"}`} />
                     <Panel defaultSize={33} hidden={!show_ui_schema}>
+                    <div className="h-8 w-full bg-gray-200 px-4 py-1 overflow-hidden text-nowrap border border-neutral-400 dark:bg-neutral-700">{ui_schema_path}</div>
                         <UiSchemaEditor></UiSchemaEditor>
                     </Panel>
                     <PanelResizeHandle className={`border-2 border-border ${show_ui_schema ? "" : "hidden"}`} />

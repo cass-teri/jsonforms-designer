@@ -15,7 +15,6 @@ fn build_menu() -> Menu {
             Menu::new()
                 .add_item(CustomMenuItem::new("new_project".to_string(), "New Project"))
                 .add_item(CustomMenuItem::new("open_project".to_string(), "Open Project"))
-                .add_item(CustomMenuItem::new("save_project".to_string(), "Save Project"))
                 .add_native_item(MenuItem::Separator)
                 .add_item(CustomMenuItem::new("new_data_schema".to_string(), "New Data Schema"))
                 .add_item(CustomMenuItem::new("new_ui_schema".to_string(), "New UI Schema"))
@@ -27,9 +26,11 @@ fn build_menu() -> Menu {
                 .add_item(CustomMenuItem::new("save_ui_schema".to_string(), "Save UI Schema"))
                 .add_native_item(MenuItem::Separator)
                 .add_item(CustomMenuItem::new("save_all".to_string(), "Save All"))
+/*
                 .add_native_item(MenuItem::Separator)
                 .add_item(CustomMenuItem::new("save_data_schema as".to_string(), "Save Data Schema As"))
                 .add_item(CustomMenuItem::new("save_ui_schema as".to_string(), "Save Data Schema As"))
+ */
         ))
         .add_submenu(Submenu::new("Edit", Menu::new()
             .add_native_item(MenuItem::Undo)
