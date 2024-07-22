@@ -79,8 +79,9 @@ export function SchemaContextProvider(props: ISchemaContextProviderProps) {
     const [ui_buffer, SetUiBuffer] = useState("{}")
     const [project_name, SetProjectName] = useState("")
     const [project_path, SetProjectPath] = useState("")
-    const [data_schema_path, SetDataSchemaPath] = useState("")
-    const [ui_schema_path, SetUiSchemaPath] = useState("")
+
+    const [data_schema_path, SetDataSchemaPathInner] = useState("")
+    const [ui_schema_path, SetUiSchemaPathInner] = useState("")
 
     const [is_data_dirty, SetIsDataDirty] = useState(false)
     const [is_ui_dirty, SetIsUiDirty] = useState(false)
@@ -99,6 +100,16 @@ export function SchemaContextProvider(props: ISchemaContextProviderProps) {
             SetUiSchema(ui_schema)
         }
     }, [])
+
+    function SetDataSchemaPath(newDataSchemaPath: string) {
+        console.log("SetDataSchemaPath", newDataSchemaPath)
+        SetDataSchemaPathInner(newDataSchemaPath)
+    }
+
+    function SetUiSchemaPath(newUiSchemaPath: string) {
+        console.log("SetUiSchemaPath", newUiSchemaPath)
+        SetUiSchemaPathInner(newUiSchemaPath)
+    }
 
     function SetDataSchema(newDataSchema: string) {
         if (newDataSchema === "") {

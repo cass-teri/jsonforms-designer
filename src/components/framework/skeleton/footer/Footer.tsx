@@ -4,7 +4,7 @@ import { useStatusMessage } from "@/components/contexts/StatusMessageProvider.ts
 
 export function Footer() {
     const { theme } = useTheme()
-    const { is_dirty } = useSchema()
+    const { is_data_dirty, is_ui_dirty } = useSchema()
     const { status_message } = useStatusMessage()
 
     let theme_message = "Light Theme"
@@ -14,7 +14,7 @@ export function Footer() {
 
     let dirty_message = ""
     let dirty_color
-    if (is_dirty) {
+    if (is_data_dirty || is_ui_dirty) {
         dirty_color = "bg-red-200 text-black"
         dirty_message = "Unsaved Changes"
     }

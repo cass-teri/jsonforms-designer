@@ -7,15 +7,15 @@ import { useEffect, useState } from "react"
 import { PreviewPanel } from "@/components/framework/PreviewPanel"
 import { appWindow } from "@tauri-apps/api/window"
 import { useSchema } from "@/components/contexts/SchemaContextProvider.tsx"
-import { SaveDataFile } from "@/lib/MenuActions/SaveDataFile.ts"
 import { OpenProject } from "@/lib/MenuActions/OpenProject.ts"
 import { NewProject } from "@/lib/MenuActions/NewProject.ts"
 import { SaveUiFile } from "@/lib/MenuActions/SaveUiFile.ts"
-import { SaveAll } from "@/lib/MenuActions/SaveAll.ts"
 import { OpenUiFile } from "@/lib/MenuActions/OpenUiFile.ts"
 import { OpenDataFile } from "@/lib/MenuActions/OpenDataFile.ts"
 import { NewDataSchema } from "@/lib/MenuActions/NewDataSchema.ts"
 import { NewUiSchema } from "@/lib/MenuActions/NewUiSchema.ts"
+import { writeTextFile } from "@tauri-apps/api/fs"
+import { save } from "@tauri-apps/api/dialog"
 
 function App() {
     const [show_canvas, SetShowCanvas] = useState(false)
@@ -23,7 +23,122 @@ function App() {
     const [show_data_schema, SetShowSchemaData] = useState(true)
     const [show_preview, SetShowPreview] = useState(true)
 
-    useAppWindowListeners()
+    const {
+        SetDataBuffer,
+        SetUiBuffer,
+        SetProjectName,
+        SetProjectPath,
+        SetDataSchemaPath,
+        SetUiSchemaPath,
+        SetIsDataDirty,
+        SetIsUiDirty,
+        data_schema_path,
+        data_buffer,
+        ui_schema_path,
+        ui_buffer
+    } = useSchema()
+
+    useEffect(() => {
+        const new_project = appWindow.listen("new_project", async () => {
+            await NewProject()
+            console.log("new_project")
+        })
+
+        const open_project = appWindow.listen("open_project", async () => {
+            console.log("open_project")
+            await OpenProject(
+                SetDataBuffer,
+                SetUiBuffer,
+                SetIsDataDirty,
+                SetIsUiDirty,
+                SetProjectName,
+                SetProjectPath,
+                SetDataSchemaPath,
+                SetUiSchemaPath
+            )
+        })
+
+        const save_project = appWindow.listen("save_project", async () => {
+            // Do save all
+        })
+
+        const new_data_schema = appWindow.listen("new_data_schema", async () => {
+            await NewDataSchema(SetDataBuffer, SetIsDataDirty)
+        })
+
+        const new_ui_schema = appWindow.listen("new_ui_schema", async () => {
+            await NewUiSchema(SetUiBuffer, SetIsUiDirty)
+        })
+
+        const open_data_schema = appWindow.listen("open_data_schema", async () => {
+            await OpenDataFile(SetDataBuffer, SetIsDataDirty, SetDataSchemaPath)
+        })
+
+        const open_ui_schema = appWindow.listen("open_ui_schema", async () => {
+            await OpenUiFile(SetUiBuffer, SetIsUiDirty, SetUiSchemaPath)
+        })
+
+        const save_data_schema = appWindow.listen("save_data_schema", async () => {
+            try {
+                let path: string | null = data_schema_path
+                if (path == "") {
+                    path = await save({
+                        filters: [
+                            {
+                                name: "data_schema",
+                                extensions: ["json"]
+                            }
+                        ]
+                    })
+                }
+
+                if (path == null) {
+                    console.log("No path selected")
+                    return "No path selected"
+                }
+
+                await writeTextFile(path, data_buffer)
+                SetIsDataDirty(false)
+            } catch (e: any) {
+                console.error(e)
+                return e.message
+            }
+        })
+
+        const save_ui_schema = appWindow.listen("save_ui_schema", async () => {
+            await SaveUiFile(ui_buffer, ui_schema_path, SetIsUiDirty)
+        })
+
+        const save_all = appWindow.listen("save_all", async () => {
+            console.log("save all")
+        })
+
+        return () => {
+            new_project.then((f) => f())
+            save_project.then((f) => f())
+            open_project.then((f) => f())
+            new_data_schema.then((f) => f())
+            new_ui_schema.then((f) => f())
+            open_data_schema.then((f) => f())
+            open_ui_schema.then((f) => f())
+            save_data_schema.then((f) => f())
+            save_ui_schema.then((f) => f())
+            save_all.then((f) => f())
+        }
+    }, [
+        SetDataBuffer,
+        SetDataSchemaPath,
+        SetIsDataDirty,
+        SetIsUiDirty,
+        SetProjectName,
+        SetProjectPath,
+        SetUiBuffer,
+        SetUiSchemaPath,
+        data_buffer,
+        data_schema_path,
+        ui_buffer,
+        ui_schema_path
+    ])
 
     function ToggleView(view: string) {
         if (view === "canvas") {
@@ -56,6 +171,7 @@ function App() {
                     <PanelResizeHandle className={`border-2 border-border ${ show_canvas ? "" : "hidden"}`} />
 */}
                     <Panel defaultSize={33} hidden={!show_data_schema}>
+                        <div className="h-10 w-full bg-gray-200 px-4 py-2">{data_schema_path}</div>
                         <DataSchemaEditor></DataSchemaEditor>
                     </Panel>
                     <PanelResizeHandle className={`border-2 border-border ${show_data_schema ? "" : "hidden"}`} />
@@ -76,85 +192,4 @@ function App() {
 
 export default App
 
-export function useAppWindowListeners() {
-    const {
-        data_schema_path,
-        data_buffer,
-        ui_schema_path,
-        ui_buffer,
-        SetDataBuffer,
-        SetUiBuffer,
-        SetProjectName,
-        SetProjectPath,
-        SetDataSchemaPath,
-        SetUiSchemaPath,
-        SetIsDataDirty,
-        SetIsUiDirty
-    } = useSchema()
-
-    useEffect(() => {
-        const new_project = appWindow.listen("new_project", async () => {
-            await NewProject()
-            console.log("new_project")
-        })
-
-        const open_project = appWindow.listen("open_project", async () => {
-            console.log("open_project")
-            await OpenProject(
-                SetDataBuffer,
-                SetUiBuffer,
-                SetIsDataDirty,
-                SetIsUiDirty,
-                SetProjectName,
-                SetProjectPath,
-                SetDataSchemaPath,
-                SetUiSchemaPath
-            )
-        })
-
-        const save_project = appWindow.listen("save_project", async () => {
-            await SaveAll(ui_buffer, ui_schema_path, SetIsUiDirty, data_buffer, data_schema_path, SetIsDataDirty)
-        })
-
-        const new_data_schema = appWindow.listen("new_data_schema", async () => {
-            await NewDataSchema(SetDataBuffer, SetIsDataDirty)
-        })
-
-        const new_ui_schema = appWindow.listen("new_ui_schema", async () => {
-            await NewUiSchema(SetUiBuffer, SetIsUiDirty)
-        })
-
-        const open_data_schema = appWindow.listen("open_data_schema", async () => {
-            await OpenDataFile(SetDataBuffer, SetIsDataDirty, SetDataSchemaPath)
-        })
-
-        const open_ui_schema = appWindow.listen("open_ui_schema", async () => {
-            await OpenUiFile(SetUiBuffer, SetIsUiDirty, SetUiSchemaPath)
-        })
-
-        const save_data_schema = appWindow.listen("save_data_schema", async () => {
-            await SaveDataFile(data_buffer, data_schema_path, SetIsDataDirty)
-        })
-
-        const save_ui_schema = appWindow.listen("save_ui_schema", async () => {
-            await SaveUiFile(ui_buffer, ui_schema_path, SetIsUiDirty)
-        })
-
-        const save_all = appWindow.listen("save_all", async () => {
-            await SaveAll(ui_buffer, ui_schema_path, SetIsUiDirty, data_buffer, data_schema_path, SetIsDataDirty)
-        })
-
-        return () => {
-            new_project.then((f) => f())
-            save_project.then((f) => f())
-            open_project.then((f) => f())
-            new_data_schema.then((f) => f())
-            new_ui_schema.then((f) => f())
-            open_data_schema.then((f) => f())
-            open_ui_schema.then((f) => f())
-            save_data_schema.then((f) => f())
-            save_ui_schema.then((f) => f())
-            save_all.then((f) => f())
-        }
-    }, [])
-}
+export function useAppWindowListeners() {}
