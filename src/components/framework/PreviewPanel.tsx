@@ -1,31 +1,68 @@
 import { useSchema } from "@/components/contexts/SchemaContextProvider.tsx"
-import { useState } from "react"
+import {useEffect, useState} from "react"
 import { JsonForms } from "@jsonforms/react"
 import { materialCells, materialRenderers } from "@jsonforms/material-renderers"
 import { GoABaseRenderers, GoACells, GoARenderers } from "@abgov/jsonforms-components"
+import {useStatusMessage} from "@/components/contexts/StatusMessageProvider.tsx";
+
 
 export function PreviewPanel() {
     const { ui_schema, data_schema } = useSchema()
     const [data, SetData] = useState({})
+    const [data_parsed, SetDataParsed] = useState({})
+    const [ui_parsed, SetUiParsed] = useState({})
+    const {SetStatusMessage} = useStatusMessage()
 
     const renderers = [...materialRenderers, ...GoABaseRenderers, ...GoARenderers]
     const cells = [...materialCells, ...GoACells]
 
     function OnChange(e: any) {
-        if (e.errors.length > 0) {
-            console.error(e.errors)
+        try {
+            if (e.errors.length > 0) {
+                console.error(e.errors)
 
-            return
+                return
+            }
+            SetData(e.data)
+        }catch(e: any){
+            SetStatusMessage({message: e.message, type: "error"})
+            console.error(e)
         }
-        SetData(e.data)
     }
+
+    useEffect(() => {
+        try {
+            const d = JSON.parse(data_schema)
+            SetDataParsed(d)
+        }catch(e: any){
+            SetStatusMessage({message: e.message, type: "error"})
+            console.error(e)
+        }
+    }, [SetStatusMessage, data_schema]);
+
+    useEffect(() => {
+        try {
+            const u = JSON.parse(ui_schema)
+            SetUiParsed(u)
+        } catch(e: any){
+            SetStatusMessage({message: e.message, type: "error"})
+            console.error(e)
+        }
+
+    }, [SetStatusMessage, ui_schema]);
+
+
+
+
+
+
 
     return (
         <div className="bg-background text-foreground h-svh">
             <div className="bg-background text-foreground scroll-auto h-[calc(100vh-6em)] overflow-auto pl-8 pr-20 py-6">
                 <JsonForms
-                    schema={JSON.parse(data_schema)}
-                    uischema={JSON.parse(ui_schema)}
+                    schema={data_parsed}
+                    uischema={ui_parsed}
                     data={data}
                     renderers={renderers}
                     cells={cells}
