@@ -242,6 +242,155 @@ export function AutoCompleteSuggestions(range: monaco.IRange) {
             ].join("\n"),
             insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
             range
+        },
+        {
+            documentation: "Header",
+            label: "jf_ui_header",
+            kind: monaco.languages.CompletionItemKind.Snippet,
+            insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+            range,
+            insertText: `
+{
+    "type": "HelpContent",
+    "label": "\${1:Header}"
+},`
+        },
+        {
+            documentation: "SubHeader",
+            label: "jf_ui_subheader",
+            kind: monaco.languages.CompletionItemKind.Snippet,
+            insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+            range,
+            insertText: `
+ {
+    "type": "HelpContent",
+    "elements": [
+        {
+            "type": "HelpContent",
+            "label": "\${1:SubHeader}"
+        }
+    ]
+}           
+`
+        },{
+            documentation: "Bullets",
+            label: "jf_ui_bullets",
+            kind: monaco.languages.CompletionItemKind.Snippet,
+            insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+            range,
+            insertText: `
+{
+    "type": "HelpContent",
+    "elements": [
+        {
+            "type": "HelpContent",
+            "label": "\${1:BulletLabel}",
+            "options": {
+                "help": [
+                    "\${2:BulletOne}",
+                    "\${3:BulletTwo}"
+                ]
+            }
+        }
+    ]
+}`
+        },{
+
+            documentation: "Details Show/Hide",
+            label: "jf_ui_details",
+            kind: monaco.languages.CompletionItemKind.Snippet,
+            insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+            range,
+            insertText: `
+{
+    "type": "HelpContent",
+    "label": "\${1:DetailsTitle}",
+    "elements": [
+    {
+        "type": "HelpContent",
+        "options": {
+            "help": "\${2:DetailsContent}"
+        }
+    }
+    ],
+    "options": {
+        "variant": "details"
+    }
+}`
+        },{
+            documentation: "Paragraph",
+            label: "jf_ui_paragraph",
+            kind: monaco.languages.CompletionItemKind.Snippet,
+            insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+            range,
+            insertText: `
+{
+    "type": "HelpContent",
+    "label": "\${1:ParagraphHeader}",
+    "options": {
+        "help": "\${2:ParagraphContent}"
+    }
+},
+`
+        },
+        {
+            documentation: "NestedParagraph",
+            label: "jf_ui_nested_paragraph",
+            kind: monaco.languages.CompletionItemKind.Snippet,
+            insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+            range,
+            insertText: `
+{
+    "type": "HelpContent",
+    "label": "\${1:ParagraphHeader}",
+    "options": {
+        "help": "\${2:PrimaryParagraph}"
+    },
+    "elements": [
+        {
+            "type": "HelpContent",
+            "label": "\${3:SecondHeader}",
+            "options": {
+                "help": "\${4:SecondParagraph}"
+            }
+        }
+    ]
+}`
+        },{
+            documentation: "Image",
+            label: "jf_ui_image",
+            kind: monaco.languages.CompletionItemKind.Snippet,
+            insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+            range,
+            insertText: `    
+{
+    "type": "HelpContent",
+    "label": "\${1:ImageLabel}",
+    "options": {
+        "variant": "img",
+        "width": "\${2:Width}",
+        "height": "\${3:Height}",
+        "alt": "\${4:AltText}",
+        "src": "https://picsum.photos/\${2:Width}/\${3:Height}"
+    }
+}       
+`
+        },{
+            documentation: "Link",
+            label: "jf_ui_link",
+            kind: monaco.languages.CompletionItemKind.Snippet,
+            insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+            range,
+            insertText: `
+{
+    "type": "HelpContent",
+    "options": {
+        "variant": "hyperlink",
+        "help": "\${1:LinkText}",
+        "link": "\${2:URL}"
+    }
+}           
+`
         }
     ]
 }
