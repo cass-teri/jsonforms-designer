@@ -1,4 +1,5 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from "react"
+import {useStatusMessage} from "@/components/contexts/StatusMessageProvider.tsx";
 
 //import { GenerateAst } from "@/components/contexts/GenerateAst.tsx"
 
@@ -14,7 +15,7 @@ type SchemaContextType = {
     SetProjectPath: (path: string) => void
 
     data_schema: string
-    SetDataSchema: (schema: string) => void
+    SetDataSchema: (schema: string) => boolean
 
     data_schema_path: string
     SetDataSchemaPath: (path: string) => void
@@ -23,7 +24,7 @@ type SchemaContextType = {
     SetDataBuffer: (buffer: string) => void
 
     ui_schema: string
-    SetUiSchema: (schema: string) => void
+    SetUiSchema: (schema: string) => boolean
 
     ui_schema_path: string
     SetUiSchemaPath: (path: string) => void
@@ -40,10 +41,10 @@ type SchemaContextType = {
 
 const initialSchemaContext: SchemaContextType = {
     ui_schema: "",
-    SetUiSchema: (_: string) => _,
+    SetUiSchema: (_: string) =>!_,
 
     data_schema: "",
-    SetDataSchema: (_: string) => _,
+    SetDataSchema: (_: string) => !_,
 
     data_schema_path: "",
     SetDataSchemaPath: (_: string) => _,
@@ -85,6 +86,7 @@ export function SchemaContextProvider(props: ISchemaContextProviderProps) {
 
     const [is_data_dirty, SetIsDataDirty] = useState(false)
     const [is_ui_dirty, SetIsUiDirty] = useState(false)
+    const {SetStatusMessage} = useStatusMessage()
 
     useEffect(() => {
         if (data_schema) {
@@ -96,7 +98,7 @@ export function SchemaContextProvider(props: ISchemaContextProviderProps) {
             SetUiBuffer(ui_schema)
             SetUiSchema(ui_schema)
         }
-    }, [])
+    }, [SetDataSchema, SetUiSchema, data_schema, ui_schema])
 
     function SetDataSchemaPath(newDataSchemaPath: string) {
         console.log("SetDataSchemaPath", newDataSchemaPath)
@@ -111,34 +113,37 @@ export function SchemaContextProvider(props: ISchemaContextProviderProps) {
     function SetDataSchema(newDataSchema: string) {
         if (newDataSchema === "") {
             SetDataSchemaInner("{}")
-            return
+            return true
         }
-
-        SetDataSchemaInner(newDataSchema)
 
         try {
-            //const ast = GenerateAst(newDataSchema, ui_schema)
-            //SetAst(ast)
-        } catch (e) {
-            console.error(e)
-            return
+            const model = JSON.parse(newDataSchema)
+            if (model !== null) {
+                SetDataSchemaInner(newDataSchema)
+            }
+            return true
+        } catch (e:any) {
+            SetStatusMessage({message: e.message, type: "error"})
+            return false
         }
+
     }
 
     function SetUiSchema(newUiSchema: string) {
         if (newUiSchema === "") {
             SetUiSchemaInner("{}")
-            return
+            return true
         }
 
-        SetUiSchemaInner(newUiSchema)
-
         try {
-            //const ast = GenerateAst(data_schema, ui_schema)
-            //SetAst(ast)
-        } catch (e) {
-            console.error(e)
-            return
+            const model = JSON.parse(newUiSchema)
+            if (model !== null) {
+                SetUiSchemaInner(newUiSchema)
+            }
+            return true
+        } catch (e: any) {
+            SetStatusMessage({message: e.message, type: "error"})
+            return false
         }
     }
 

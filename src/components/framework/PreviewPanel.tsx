@@ -4,6 +4,7 @@ import { JsonForms } from "@jsonforms/react"
 import { materialCells, materialRenderers } from "@jsonforms/material-renderers"
 import { GoABaseRenderers, GoACells, GoARenderers } from "@abgov/jsonforms-components"
 import {useStatusMessage} from "@/components/contexts/StatusMessageProvider.tsx";
+import {DataObject} from "@/components/framework/DataObject.tsx";
 
 
 export function PreviewPanel() {
@@ -24,6 +25,7 @@ export function PreviewPanel() {
                 return
             }
             SetData(e.data)
+            console.log("data", e.data)
         }catch(e: any){
             SetStatusMessage({message: e.message, type: "error"})
             console.error(e)
@@ -51,15 +53,13 @@ export function PreviewPanel() {
 
     }, [SetStatusMessage, ui_schema]);
 
-
-
-
-
-
+    function OnClick() {
+        SetData({})
+    }
 
     return (
         <div className="bg-background text-foreground h-svh">
-            <div className="bg-background text-foreground scroll-auto h-[calc(100vh-6em)] overflow-auto pl-8 pr-20 py-6">
+            <div className="bg-background text-foreground scroll-auto h-[calc(100vh-6em)] overflow-auto pl-8 pr-20 py-6 flex flex-col justify-between gap-6">
                 <JsonForms
                     schema={data_parsed}
                     uischema={ui_parsed}
@@ -69,6 +69,14 @@ export function PreviewPanel() {
                     onChange={OnChange}
                     additionalErrors={[]}
                 ></JsonForms>
+                <hr className="bg-neutral-700 h-2 pt-2"/>
+                <div className="relative">
+                    <div className="flex flex-row justify-between">
+                    <h3>Data:</h3>
+                        <button onClick={OnClick}>Reset Data</button>
+                    </div>
+                    <DataObject data_object={data}></DataObject>
+                </div>
             </div>
         </div>
     )
