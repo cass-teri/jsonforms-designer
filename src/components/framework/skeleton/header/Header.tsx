@@ -41,10 +41,16 @@ export function Header(props: IHeaderProps) {
                 return "No path selected"
             }
 
-            await writeTextFile(path, data_buffer)
-            SetIsDataDirty(false)
-            SetDataSchema(data_buffer)
-            SetDataSchemaPath(path)
+            const is_model_valid = SetDataSchema(data_buffer)
+
+            if(is_model_valid) {
+                await writeTextFile(path, data_buffer)
+                SetIsDataDirty(false)
+                SetDataSchemaPath(path)
+            }
+            else {
+                return "Data Schema is invalid"
+            }
         } catch (e: any) {
             SetStatusMessage({ message: e.message, type: "error" })
             return e.message
@@ -69,10 +75,15 @@ export function Header(props: IHeaderProps) {
                 return "No path selected"
             }
 
-            await writeTextFile(path, ui_buffer)
-            SetIsUiDirty(false)
-            SetUiSchema(ui_buffer)
-            SetUiSchemaPath(path)
+            const is_ui_valid = SetUiSchema(ui_buffer)
+            if (is_ui_valid) {
+                await writeTextFile(path, ui_buffer)
+                SetIsUiDirty(false)
+                SetUiSchemaPath(path)
+            }
+            else {
+                return "UI Schema is invalid"
+            }
         } catch (e: any) {
             console.error(e)
             SetStatusMessage({ message: e.message, type: "error" })
@@ -80,6 +91,7 @@ export function Header(props: IHeaderProps) {
         }
 
         SetStatusMessage({ message: "Files saved successfully", type: "success" })
+
     }
 
     return (
