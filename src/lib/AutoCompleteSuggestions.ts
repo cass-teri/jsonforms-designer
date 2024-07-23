@@ -391,6 +391,83 @@ export function AutoCompleteSuggestions(range: monaco.IRange) {
     }
 }           
 `
+        },
+        {
+            documentation: "Province Dropdown",
+            label: "jf_ui_province",
+            kind: monaco.languages.CompletionItemKind.Snippet,
+            insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+            range,
+            insertText: `
+"province": {
+    "type": "string",
+    "enum": [
+        "Alberta",
+        "British Columbia",
+        "Manitoba",
+        "New Brunswick",
+        "Newfoundland and Labrador",
+        "Northwest Territories",
+        "Nova Scotia",
+        "Nunavut",
+        "Ontario",
+        "Prince Edward Island",
+        "Québec",
+        "Saskatchewan",
+        "Yukon"
+    ]
+}`
+        },
+        {
+            documentation: "Boolean",
+            label: "jf_data_boolean",
+            kind: monaco.languages.CompletionItemKind.Snippet,
+            insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+            range,
+            insertText: `
+"\${1:Name}": {
+    "type": "boolean",
+    "description":"\${2:Description}"
+}`
+        },
+        {
+            description: "Phone Number",
+            label: "jf_data_phone",
+            kind: monaco.languages.CompletionItemKind.Snippet,
+            insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+            range,
+            insertText: `
+"\${1:Name}": {
+    "type": "string",
+    "description":"\${2:Description}",
+    "pattern": "^\\\\\\d{3}[ -]?\\\\\\d{3}[ -]?\\\\\\d{4}$"
+}`
+        },
+        {
+            description: "Email",
+            label: "jf_data_email",
+            kind: monaco.languages.CompletionItemKind.Snippet,
+            insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+            range,
+            insertText: `
+"\${1:Name}": {
+    "type": "string",
+    "description":"\${2:Description}",
+    "pattern": "^.+@.+\\\\\\..{2,}$"
+}`
+        },
+        {
+            description: "Postal Code",
+            label: "jf_data_postal",
+            kind: monaco.languages.CompletionItemKind.Snippet,
+            insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+            range,
+            insertText: `   
+"\${1:Name}": {
+    "type": "string",
+    "description":"\${2:Description}",
+    "pattern": "^[A-Za-z]\\\\\\d[A-Za-z][ -]?\\\\\\d[A-Za-z]\\\\\\d$"
+}`
         }
     ]
 }
