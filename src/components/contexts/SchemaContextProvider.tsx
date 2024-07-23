@@ -98,7 +98,7 @@ export function SchemaContextProvider(props: ISchemaContextProviderProps) {
             SetUiBuffer(ui_schema)
             SetUiSchema(ui_schema)
         }
-    }, [SetDataSchema, SetUiSchema, data_schema, ui_schema])
+    }, [data_schema, ui_schema])
 
     function SetDataSchemaPath(newDataSchemaPath: string) {
         console.log("SetDataSchemaPath", newDataSchemaPath)
