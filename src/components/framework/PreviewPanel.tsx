@@ -5,6 +5,7 @@ import { materialCells, materialRenderers } from "@jsonforms/material-renderers"
 import { GoABaseRenderers, GoACells, GoARenderers } from "@abgov/jsonforms-components"
 import {useStatusMessage} from "@/components/contexts/StatusMessageProvider.tsx";
 import {DataObject} from "@/components/framework/DataObject.tsx";
+import {UISchemaElement} from "@jsonforms/core";
 
 
 export function PreviewPanel() {
@@ -62,7 +63,7 @@ export function PreviewPanel() {
             <div className="bg-background text-foreground scroll-auto h-[calc(100vh-6em)] overflow-auto pl-8 pr-20 py-6 flex flex-col justify-between gap-6">
                 <JsonForms
                     schema={data_parsed}
-                    uischema={ui_parsed}
+                    uischema={ui_parsed as UISchemaElement }
                     data={data}
                     renderers={renderers}
                     cells={cells}
